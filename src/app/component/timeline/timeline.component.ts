@@ -40,6 +40,7 @@ export class TimelineComponent implements OnInit {
 
     fromEvent(window, 'resize').subscribe((event) => {
       //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
+      //TODO 需要改为同步调用:
       that.upDate();
       that.draw.drawEquidistantLine(that.canvas, this.value_line);
     })
