@@ -1,13 +1,16 @@
-#background{
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
+#background {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  //不屏蔽滚动条，在改变页面高度时，会判定为需要滚动条，改变了宽度，使画的线出现“来回跳跃”现象
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-#timeTable{
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
+#timeTable {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
 }
