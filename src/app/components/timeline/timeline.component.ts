@@ -14,7 +14,7 @@ import { DrawService } from '../../service/draw.service';
 })
 export class TimelineComponent implements OnInit {
 
-  value_line: line_info;
+  value_line: line_info[];
   canvas: canvas_info = { canvas_height: 0, canvas_width: 0 };
   window_is_resize: boolean;
   constructor(private draw: DrawService) { }
@@ -31,7 +31,7 @@ export class TimelineComponent implements OnInit {
     /**
      * @todo 根据窗口大小自适应画线规则
      */
-    this.value_line = { line_num: 12, length: 0.8, HorV: HV.v };
+    this.value_line = [{ line_num: 12, length: 0.8, HorV: HV.v }, { line_num: 12, length: 0.9, HorV: HV.h }];
   }
 
   ngOnInit(): void {
@@ -41,15 +41,15 @@ export class TimelineComponent implements OnInit {
   ngAfterViewInit(): void {
     //加载完页面后才能获取到canvas元素
     this.canvas.canvas_event = <HTMLCanvasElement>document.getElementById("myCanvas");
-
+    this.update();
+    this.draw.drawEquidistantLine(this.canvas, this.value_line);
     fromEvent(window, 'resize').subscribe((event) => {
       //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
       this.update();
+      this.draw.drawEquidistantLine(this.canvas, this.value_line);
     })
   }
 
   ngAfterViewChecked() {
-    this.update();
-    this.draw.drawEquidistantLine(this.canvas, this.value_line);
   }
 }

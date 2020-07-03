@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TimelineComponent } from './component/timeline/timeline.component';
-import { ICPComponent } from './component/icp/icp.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { ICPComponent } from './components/icp/icp.component';
 
 @NgModule({
   declarations: [
