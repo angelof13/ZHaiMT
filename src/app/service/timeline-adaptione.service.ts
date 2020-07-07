@@ -15,8 +15,43 @@ export class TimelineAdaptioneService {
     return this.value_line[0];
   }
   /**
- * @todo 将所有比例及对应分割方法抽成数组,便于维护
+ * @description 常见比例及对应分割方法抽成数组,便于维护
  */
+  private resolution_ratio_and_divide: { w: number, h: number, n: number }[] = [
+    { w: 800, h: 600, n: 4 },
+    { w: 1024, h: 768, n: 4 },
+    { w: 1280, h: 720, n: 4 },
+    { w: 1280, h: 800, n: 6 },
+    { w: 1280, h: 960, n: 4 },
+    { w: 1366, h: 768, n: 6 },
+    { w: 1440, h: 900, n: 6 },
+    { w: 1600, h: 900, n: 6 },
+    { w: 1600, h: 1200, n: 4 },
+    { w: 1680, h: 1050, n: 6 },
+    { w: 1792, h: 868, n: 6 },
+    { w: 1920, h: 1080, n: 12 },
+    { w: 1920, h: 1200, n: 12 },
+    { w: 1920, h: 1400, n: 8 },
+    { w: 2048, h: 1152, n: 12 },
+    { w: 2048, h: 1536, n: 8 },
+    { w: 2560, h: 1080, n: 16 },
+    { w: 2560, h: 1440, n: 12 },
+    { w: 2560, h: 1600, n: 12 },
+    { w: 2800, h: 2100, n: 8 },//一下显示分辨率纯靠猜测,无实机测试
+    { w: 3440, h: 1440, n: 16 },
+    { w: 3840, h: 1080, n: 24 },
+    { w: 3840, h: 2160, n: 18 },
+    { w: 3840, h: 2400, n: 18 },
+    { w: 4096, h: 3072, n: 16 },
+    { w: 5120, h: 3200, n: 24 },
+    { w: 5120, h: 4096, n: 24 },
+    { w: 6400, h: 4096, n: 24 },
+    { w: 6400, h: 4800, n: 20 },
+    { w: 7680, h: 4320, n: 24 },
+    { w: 7680, h: 4800, n: 24 }
+
+  ];
+
   timeline_self_adaption(area_info: { area_width: number; area_height: number }): boolean {
     let adaption_info = { height: area_info.area_height, width: area_info.area_width, w_ge_h: area_info.area_width >= area_info.area_height };
     let need_draw: boolean = false;
@@ -24,7 +59,7 @@ export class TimelineAdaptioneService {
 
       need_draw = true;
       /**
-      * 根据窗口大小自适应画线规则
+      * @todo 按照resolution_ratio_and_divide进行自适应的计算公式
       */
       if ((adaption_info.width <= 1366 && adaption_info.height <= 768) || (adaption_info.height <= 1366 && adaption_info.width <= 768)) {
         this.value_line[0].line_num = 6;
@@ -43,7 +78,7 @@ export class TimelineAdaptioneService {
         adaption_info.width = 3840;
         adaption_info.height = 1080;
       } else if ((adaption_info.width <= 4096 && adaption_info.height <= 3112) || (adaption_info.height <= 4096 && adaption_info.width <= 3112)) {
-        this.value_line[0].line_num = 18;
+        this.value_line[0].line_num = 16;
         adaption_info.width = 4096;
         adaption_info.height = 3112;
       } else if ((adaption_info.width <= 7680 && adaption_info.height <= 4320) || (adaption_info.height <= 7680 && adaption_info.width <= 4320)) {
