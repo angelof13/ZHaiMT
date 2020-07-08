@@ -6,6 +6,9 @@
   //不屏蔽滚动条，在改变页面高度时，会判定为需要滚动条，改变了宽度，使画的线出现“来回跳跃”现象
   overflow-x: hidden;
   overflow-y: hidden;
+  position: fixed;
+  z-index: 1;
+  background-color: green($color: #000000);
 }
 
 #timeTable {

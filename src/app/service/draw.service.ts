@@ -77,6 +77,7 @@ export class DrawService {
           num < lines[line_info_num].line_num;
           num++, coordinate_a = (init_point.y + interval * num)) {
           draw_map.beginPath();
+          draw_map.strokeStyle="#FF0000";
           draw_map.moveTo(init_point.x, coordinate_a);
           draw_map.lineTo(coordinate_b, coordinate_a);
           draw_map.stroke();
@@ -93,6 +94,15 @@ export class DrawService {
         }
       }
     }
+    var imageData=draw_map.getImageData(0,0,500,500);
+    for(var i=0; i<imageData.data.length-4; i=i+4){
+      let average=(imageData.data[i]+imageData.data[i+1]+imageData.data[i+2])/3;
+      imageData.data[i]=average;
+      imageData.data[i+1]=average;
+      imageData.data[i+2]=average;
+      imageData.data[i+3]=imageData.data[i+3];
+    }
+    draw_map.putImageData(imageData,0,0)
     return true;
   }
 }
