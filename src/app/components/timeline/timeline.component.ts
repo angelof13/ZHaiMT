@@ -24,12 +24,11 @@ export class TimelineComponent implements OnInit {
   private update(): void {
     let cabvas_area = { area_width: this.canvas.canvas_event.parentElement.offsetWidth, area_height: this.canvas.canvas_event.parentElement.offsetHeight };
 
-    let adp_result = this.tl_adp.timeline_self_adaption(cabvas_area);
+    let adp_result = this.tl_adp.timelineSelfAdaption(cabvas_area);
 
     if (adp_result) {
       this.canvas.canvas_width = cabvas_area.area_width;
       this.canvas.canvas_height = cabvas_area.area_height;
-      console.log("canvas_height:" + this.canvas.canvas_height + " canvas_width:" + this.canvas.canvas_width + " area_width:" + this.canvas.canvas_event.parentElement.offsetHeight + " area_height:" + this.canvas.canvas_event.parentElement.offsetWidth);
       this.draw.drawEquidistantLine(this.canvas, [this.tl_adp.get_line_info()]);
     }
   }

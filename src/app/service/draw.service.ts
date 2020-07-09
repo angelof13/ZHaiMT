@@ -34,18 +34,34 @@ export interface line_info {
   HorV: horizontal_vertical;
 }
 
-/**
- * @description 画线的初始坐标
- */
-let init_point = { x: 40, y: 40 };
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DrawService {
+  /**
+   * @description 画线的初始坐标
+   */
+  private init_point = { x: 40, y: 40 };
 
   constructor() { }
+  /**
+   * @todo 得到时间表数组
+   */
+  private getTimeArray(divide_part: number, start_time: number = 180): string[] {
+    let s_time = start_time <= 0 ? 0 : start_time >= 1440 ? 0 : start_time, time_array: string[], time_interval = (1440 / divide_part), time_h = ((s_time / 60) | 0), time_m = (start_time - time_h * 60);
+    time_array.push((time_h > 10 ? "" : "0" + time_h) + (time_m > 10 ? "" : "0" + time_m));
+    for (let divide_num = 1; divide_num < divide_part; divide_num++) {
+      time_m = time_m + time_interval;
+      if (time_m > 60) {
+        time_h += 1;
+      }
+      time_array.push((time_h > 10 ? "" : "0" + time_h) + (time_m > 10 ? "" : "0" + time_m));
+    }
+
+    return time_array;
+  }
   /**
    * @param {canvas_info} canvas 传入canvas信息
    * @param {line_info} line 设置画线信息
@@ -55,37 +71,37 @@ export class DrawService {
     if (!canvas.canvas_event) {
       return false;
     }
+    let time: number
     canvas.canvas_event.height = canvas.canvas_height;
     canvas.canvas_event.width = canvas.canvas_width;
     let draw_map = canvas.canvas_event.getContext("2d");
     draw_map.setLineDash([9, 3]);
     draw_map.lineWidth = 1;
-    let interval: number;
+    let line_interval: number;
     for (let line_info_num = 0; line_info_num < lines.length; line_info_num++) {
-      init_point.x = lines[line_info_num].start_point.x;
-      init_point.y = lines[line_info_num].start_point.y;
+      this.init_point.x = lines[line_info_num].start_point.x;
+      this.init_point.y = lines[line_info_num].start_point.y;
       let length = lines[line_info_num].length < 0 ? 0 :
         lines[line_info_num].length > 1 ? lines[line_info_num].length :
-          (lines[line_info_num].length * (lines[line_info_num].HorV == horizontal_vertical.h ? canvas.canvas_event.width : canvas.canvas_event.height));
-
+          (0.5 + lines[line_info_num].length * (lines[line_info_num].HorV == horizontal_vertical.h ? canvas.canvas_event.width : canvas.canvas_event.height)) | 0;
       if (lines[line_info_num].HorV == horizontal_vertical.h) {
 
-        interval = ((canvas.canvas_height - (init_point.y * 2)) / (lines[line_info_num].line_num - 1));
-        for (let num = 0, coordinate_a = (init_point.y + interval * num), coordinate_b = init_point.x + length;
-          num < lines[line_info_num].line_num;
-          num++, coordinate_a = (init_point.y + interval * num)) {
+        line_interval = ((canvas.canvas_height - (this.init_point.y * 2)) / (lines[line_info_num].line_num - 1));
+        for (let num = 0, coordinate_a = (this.init_point.y + line_interval * num), coordinate_b = this.init_point.x + length, line_num = lines[line_info_num].line_num;
+          num < line_num;
+          num++, coordinate_a = (this.init_point.y + line_interval * num)) {
           draw_map.beginPath();
-          draw_map.moveTo(init_point.x, coordinate_a);
+          draw_map.moveTo(this.init_point.x, coordinate_a);
           draw_map.lineTo(coordinate_b, coordinate_a);
           draw_map.stroke();
         }
       } else {
-        interval = ((canvas.canvas_width - (init_point.x * 2)) / (lines[line_info_num].line_num - 1));
-        for (let num = 0, coordinate_a = (init_point.x + interval * num), coordinate_b = init_point.y + length;
-          num < lines[line_info_num].line_num;
-          num++, coordinate_a = (init_point.x + interval * num)) {
+        line_interval = ((canvas.canvas_width - (this.init_point.x * 2)) / (lines[line_info_num].line_num - 1));
+        for (let num = 0, coordinate_a = (this.init_point.x + line_interval * num), coordinate_b = this.init_point.y + length, line_num = lines[line_info_num].line_num;
+          num < line_num;
+          num++, coordinate_a = (this.init_point.x + line_interval * num)) {
           draw_map.beginPath();
-          draw_map.moveTo(coordinate_a, init_point.y);
+          draw_map.moveTo(coordinate_a, this.init_point.y);
           draw_map.lineTo(coordinate_a, coordinate_b);
           draw_map.stroke();
         }
