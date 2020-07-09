@@ -69,12 +69,14 @@ export class TimelineAdaptioneService {
             this.value_line[0].HorV = horizontal_vertical.v;
             this.value_line[0].start_point.x = (0.5 + adaption_info.width * 0.02) | 0;
             this.value_line[0].start_point.y = 40;
+            this.value_line[0].length = (0.5 + this.value_line[0].length * adaption_info.height) | 0;
             area_info.area_width = adaption_info.width;
             area_info.area_height = adaption_info.height;
           } else {
             this.value_line[0].HorV = horizontal_vertical.h;
             this.value_line[0].start_point.x = 30;
-            this.value_line[0].start_point.y = adaption_info.height * 0.01;
+            this.value_line[0].start_point.y = (0.5 + adaption_info.height * 0.01) | 0;
+            this.value_line[0].length = (0.5 + this.value_line[0].length * adaption_info.width) | 0;
             area_info.area_width = adaption_info.height;
             area_info.area_height = adaption_info.width;
           }
