@@ -58,6 +58,8 @@ export class DrawService {
     canvas.canvas_event.height = canvas.canvas_height;
     canvas.canvas_event.width = canvas.canvas_width;
     let draw_map = canvas.canvas_event.getContext("2d");
+    draw_map.setLineDash([9, 3]);
+    draw_map.lineWidth = 1;
     let interval: number;
     for (let line_info_num = 0; line_info_num < lines.length; line_info_num++) {
       init_point.x = lines[line_info_num].start_point.x;

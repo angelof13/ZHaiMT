@@ -29,6 +29,7 @@ export class TimelineComponent implements OnInit {
     if (adp_result) {
       this.canvas.canvas_width = cabvas_area.area_width;
       this.canvas.canvas_height = cabvas_area.area_height;
+      console.log("canvas_height:" + this.canvas.canvas_height + " canvas_width:" + this.canvas.canvas_width + " area_width:" + this.canvas.canvas_event.parentElement.offsetHeight + " area_height:" + this.canvas.canvas_event.parentElement.offsetWidth);
       this.draw.drawEquidistantLine(this.canvas, [this.tl_adp.get_line_info()]);
     }
   }
@@ -36,7 +37,6 @@ export class TimelineComponent implements OnInit {
   ngOnInit(): void {
     this.canvas.canvas_event = this.render.selectRootElement("#timeline_canvas");
     this.update();
-
     fromEvent(window, 'resize').subscribe((event) => {
       //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
       this.update();
