@@ -7,7 +7,6 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { ICPComponent } from './components/icp/icp.component';
 
 import { DrawService } from './service/draw.service';
-import { TimelineAdaptioneService } from './service/timeline-adaptione.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,7 @@ import { TimelineAdaptioneService } from './service/timeline-adaptione.service';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [DrawService, TimelineAdaptioneService],
+  providers: [DrawService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
