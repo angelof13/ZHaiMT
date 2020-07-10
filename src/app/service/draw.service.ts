@@ -94,15 +94,6 @@ export class DrawService {
         }
       }
     }
-    var imageData=draw_map.getImageData(0,0,500,500);
-    for(var i=0; i<imageData.data.length-4; i=i+4){
-      let average=(imageData.data[i]+imageData.data[i+1]+imageData.data[i+2])/3;
-      imageData.data[i]=average;
-      imageData.data[i+1]=average;
-      imageData.data[i+2]=average;
-      imageData.data[i+3]=imageData.data[i+3];
-    }
-    draw_map.putImageData(imageData,0,0)
     return true;
   }
 }
