@@ -102,10 +102,10 @@ class TimelineDataAndFunction {
                         area_info.area_width = adaption_info.height;
                         area_info.area_height = adaption_info.width;
                     }
-                    this.old_adaption_info.width.min = this.resolution_ratio_and_divide[rrad_i - 1].w;
-                    this.old_adaption_info.width.max = this.resolution_ratio_and_divide[rrad_i].w;
-                    this.old_adaption_info.height.min = this.resolution_ratio_and_divide[rrad_i - 1].h;
-                    this.old_adaption_info.height.max = this.resolution_ratio_and_divide[rrad_i].h;
+                    this.old_adaption_info.width.min = rrad_i == 0 ? 0 : this.resolution_ratio_and_divide[rrad_i - 1].w;
+                    this.old_adaption_info.width.max = rrad_i == (this.resolution_ratio_and_divide_num - 1) ? Infinity : this.resolution_ratio_and_divide[rrad_i].w;
+                    this.old_adaption_info.height.min = rrad_i == 0 ? 0 : this.resolution_ratio_and_divide[rrad_i - 1].h;
+                    this.old_adaption_info.height.max = rrad_i == (this.resolution_ratio_and_divide_num - 1) ? Infinity : this.resolution_ratio_and_divide[rrad_i].h;
                     need_draw = true;
                     break;
                 }
