@@ -65,6 +65,8 @@ export class DrawService {
     canvas.canvas_event.width = canvas.canvas_width;
     let draw_map = canvas.canvas_event.getContext("2d");
     let interval: number;
+    let img:CanvasImageSource =<CanvasImageSource> document.getElementById("img");
+    draw_map.drawImage(img,200,0);
     for (let line_info_num = 0; line_info_num < lines.length; line_info_num++) {
       let length = lines[line_info_num].length < 0 ? 0 :
         lines[line_info_num].length > 1 ? lines[line_info_num].length :

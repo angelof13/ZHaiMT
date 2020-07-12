@@ -5,6 +5,7 @@ import * as datatype from './timeline_datatype';
 
 import { canvas_info, horizontal_vertical as HV, line_info } from '../../service/draw.service';
 import { DrawService } from '../../service/draw.service';
+import { ShadeService } from '../../service/shade.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class TimelineComponent implements OnInit {
   value_line: line_info[];
   canvas: canvas_info = { canvas_height: 0, canvas_width: 0 };
   window_is_resize: boolean;
-  constructor(private draw: DrawService) { }
+  constructor(private draw: DrawService,private shade_service: ShadeService) { }
 
   /**
    * @description 改变窗口大小时，更新值的方法
@@ -43,10 +44,14 @@ export class TimelineComponent implements OnInit {
     this.canvas.canvas_event = <HTMLCanvasElement>document.getElementById("myCanvas");
     this.update();
     this.draw.drawEquidistantLine(this.canvas, this.value_line);
+
+    // this.shade_service.current_time_shade_canvas(this.canvas.canvas_event,"left");
+
     fromEvent(window, 'resize').subscribe((event) => {
       //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
       this.update();
       this.draw.drawEquidistantLine(this.canvas, this.value_line);
+      // this.shade_service.current_time_shade_canvas(this.canvas.canvas_event,"left");
     })
   }
 
