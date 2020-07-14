@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { ShadeService } from '../../service/shade.service';
+import { fromEvent,interval } from 'rxjs';
 
 
 
@@ -20,30 +21,61 @@ export class ShadeComponent implements OnInit {
   
   ngOnInit(): void {
 
+    const secondsCounter = interval(1000);
+    // Subscribe to begin publishing values
+    let shade_canvas =this.render.selectRootElement("#shade_canvas");
+    secondsCounter.subscribe(n =>{
+      this.shade_service.current_time_part_shade_canvas(shade_canvas,this.eject_direction);
+      console.log(this.eject_direction+n);
+      
+      
+    })
+    
+
+  }
+  ngAfterViewInit(): void {
+
+    let eject_direction = this.get_eject_direction();
+
+    this.shade_init(eject_direction)
+    fromEvent(window, 'resize').subscribe((event) => {
+      let eject_direction = this.get_eject_direction();
+      this.eject_direction = eject_direction;
+      this.shade_init(eject_direction);
+    })
+  }
+
+  shade_init(eject_direction: string){
     var date = new Date();
     // 计算当前毫秒票数
     var milliseconds = (date.getTime()+28800000)%86400000;
+    // 遮罩的弹出方法
+    this.shade_service.makeAnimation(this.render.selectRootElement("#shade"),0.5,"black",milliseconds,eject_direction);
+    let canvas = this.render.selectRootElement("#myCanvas");
+    let shade_canvas =this.render.selectRootElement("#shade_canvas");
+    // 获取被复制的canvas的长和宽
+    let width = canvas.parentElement.offsetWidth;
+    let height = canvas.parentElement.offsetHeight;
 
-    this.shade_service.makeAnimation(this.render.selectRootElement("#shade"),0.5,"black",milliseconds,"left");
-    setTimeout(service=>{
+    let ctx=canvas.getContext("2d");
+    let shade_ctx = shade_canvas.getContext("2d");
+    // 设置canvas的长和宽
+    shade_canvas.width = width;
+    shade_canvas.height =height;
+    // 复制canvas的内容
+    let imageData = ctx.getImageData(0,0,width,height);
+    shade_ctx.putImageData(imageData,0,0);
+    
+    this.shade_service.current_time_shade_canvas(shade_canvas,eject_direction)
+  }
 
-      let canvas = this.render.selectRootElement("#myCanvas");
-      let shade_canvas =this.render.selectRootElement("#shade_canvas");
-      let width = canvas.parentElement.offsetWidth;
-      let height = canvas.parentElement.offsetHeight;
-  
-      let ctx=canvas.getContext("2d");
-      let shade_ctx = shade_canvas.getContext("2d");
-  
-      shade_canvas.width = width;
-      shade_canvas.height =height;
-      
-      let imageData = ctx.getImageData(0,0,width,height);
-      shade_ctx.putImageData(imageData,0,0);
-      
-      this.shade_service.current_time_shade_canvas(shade_canvas,"left")
-
-
-    },100)
+  get_eject_direction(): string {
+    let height: number = document.body.offsetHeight;
+    let width: number = document.body.offsetWidth;
+    if(height>width){
+      return "top"
+    }else{
+      return "left"
+    }
   }
 }

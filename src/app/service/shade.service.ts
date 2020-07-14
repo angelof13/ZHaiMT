@@ -114,7 +114,6 @@ export class ShadeService {
     var date = new Date();
     var milliseconds = (date.getTime()+28800000)%86400000;
     let percentage = milliseconds/86400000+0.002
-
     switch (eject_direction) {
       case "top":
         this.canvasBlackAndWhiteFilters(canvas,0,0,width,height*percentage);
@@ -130,6 +129,36 @@ export class ShadeService {
       case "left":
 
         this.canvasBlackAndWhiteFilters(canvas,0,0,width*percentage,height);
+        break;
+    
+      default:
+        break;
+    }
+
+  }
+
+  current_time_part_shade_canvas(canvas : HTMLCanvasElement, eject_direction: string){
+
+    let width = canvas.parentElement.offsetWidth;
+    let height = canvas.parentElement.offsetHeight;
+    var date = new Date();
+    var milliseconds = (date.getTime()+28800000)%86400000;
+    let percentage = milliseconds/86400000+0.002
+    switch (eject_direction) {
+      case "top":
+        this.canvasBlackAndWhiteFilters(canvas,0,0,width,height*percentage);
+        break;
+      case "bottom":
+
+        this.canvasBlackAndWhiteFilters(canvas,0,height*(1-percentage),width,height*percentage);
+        break;
+      case "right":
+
+        this.canvasBlackAndWhiteFilters(canvas,width*(1-percentage),0,width*percentage,height);
+        break;
+      case "left":
+
+        this.canvasBlackAndWhiteFilters(canvas,0,width*percentage-1,2,height);
         break;
     
       default:
