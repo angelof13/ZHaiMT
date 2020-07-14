@@ -24,12 +24,12 @@ export class TimelineComponent implements OnInit {
   private update(): void {
     let canvas_area = { area_width: this.canvas.parentElement.offsetWidth, area_height: this.canvas.parentElement.offsetHeight };
 
-    this.tl_daf.timelineSelfAdaption(canvas_area, true);
+    this.tl_daf.timelineSelfAdaption(canvas_area);
     this.canvas.width = canvas_area.area_width;
     this.canvas.height = canvas_area.area_height;
-
     let draw_map = this.canvas.getContext("2d");
-    this.draw.drawEquidistantLine(draw_map, canvas_area.area_width, canvas_area.area_height, [this.tl_daf.get_line_info()]);
+
+    this.draw.drawLine(draw_map, this.tl_daf.getLinesInfo(1));
   }
 
   ngOnInit(): void {
