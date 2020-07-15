@@ -28,4 +28,24 @@ class DrawService {
     }
   }
 
+  /**
+ * @description 画出最多二维数组的线
+ * @param {CanvasRenderingContext2D} draw_map 传入可绘制区域信息,即 canvas.getContext('2D')
+ * @param {[[{ start: point; end: point; }]]} lines_info 需要绘制的线的信息
+ */
+  drawText(draw_map: CanvasRenderingContext2D, texts_info: { text: { content: string; draw: point; }[], align_style: string, font_size: number, font_type: string }) {
+    switch (texts_info.align_style) {
+      case "start": draw_map.textAlign = "start"; break;
+      case "end": draw_map.textAlign = "end"; break;
+      case "left": draw_map.textAlign = "left"; break;
+      case "center": draw_map.textAlign = "center"; break;
+      case "right": draw_map.textAlign = "right"; break;
+    }
+    draw_map.font = texts_info.font_size + "px " + texts_info.font_type;
+    for (let i = 0; i < texts_info.text.length; i++) {
+      draw_map.beginPath();
+      draw_map.fillText(texts_info.text[i].content, texts_info.text[i].draw.x, texts_info.text[i].draw.y);
+      draw_map.stroke();
+    }
+  }
 }

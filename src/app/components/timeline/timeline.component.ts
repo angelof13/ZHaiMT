@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { fromEvent } from 'rxjs';
 
-import { TimelineDataAndFunction } from './timeline-daf';
+import { TimelineDataAndFunction, current_mode } from './timeline-daf';
 
 import { DrawService } from '../../service/draw.service';
 //import { TimelineAdaptioneService } from '../../service/timeline-adaptione.service'
@@ -24,12 +24,13 @@ export class TimelineComponent implements OnInit {
   private update(): void {
     let canvas_area = { area_width: this.canvas.parentElement.offsetWidth, area_height: this.canvas.parentElement.offsetHeight };
 
-    this.tl_daf.timelineSelfAdaption(canvas_area);
+    this.tl_daf.timelineSelfAdaption(canvas_area, current_mode.day);
     this.canvas.width = canvas_area.area_width;
     this.canvas.height = canvas_area.area_height;
     let draw_map = this.canvas.getContext("2d");
 
     this.draw.drawLine(draw_map, this.tl_daf.getLinesInfo(1));
+    this.draw.drawText(draw_map, this.tl_daf.getTimeTextInfo(current_mode.day));
   }
 
   ngOnInit(): void {
