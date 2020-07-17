@@ -75,7 +75,10 @@ export class ShadeService {
     // 高度增加1px的时间
     let height_time = 86400000/(width*0.996);
     if(this.fast_shade){
-      this.fast_shade.unsubscribe()
+      this.fast_shade.unsubscribe();
+    }
+    if(this.slow_shade){
+      this.slow_shade.unsubscribe();
     }
     switch (eject_direction) {
       case "top":
