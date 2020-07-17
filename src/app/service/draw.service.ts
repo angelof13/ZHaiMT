@@ -48,4 +48,29 @@ class DrawService {
       draw_map.stroke();
     }
   }
+
+  /**
+  * @description 画出带文字的框
+  * @param {CanvasRenderingContext2D} draw_map 传入可绘制区域信息,即 canvas.getContext('2D')
+  * @param boxes_info 需要绘制的框的信息
+  */
+  drawBox(draw_map: CanvasRenderingContext2D, timeline_width: number, timeline_height: number, boxes_info: { task: string, start: point, length?: number, end?: point }[]) {
+    let box_height: number;
+    if (boxes_info.length < 8) {
+      box_height = timeline_height >> 3;
+    } else {
+      box_height = boxes_info.length;
+    }
+
+    for (let i = 0; i < boxes_info.length; i++) {
+      draw_map.beginPath();
+      draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].length, box_height);
+      draw_map.stroke();
+      draw_map.fillStyle = "#FF0000";
+      draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].length, box_height);
+      draw_map.fillStyle = "#000000";
+      this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].length / 2), y: (boxes_info[i].start.y + box_height / 2 + 15) } }], align_style: "center", font_size: 30, font_type: "Microsoft YaHei" });
+
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export { TimelineDataAndFunction, current_mode }
+export { TimelineDataAndFunction, current_mode, boxes_info }
 
 /**************************************************************************************数据类型接口************************************************************************************************************/
 interface point { x: number, y: number; };
@@ -18,7 +18,9 @@ interface line_info { start: point; end: point; };
  * @param draw 设置文字位置
  */
 interface text_style { content: string; draw: point; };
-interface texts_style { text: text_style[], align_style: string, font_size: number, font_type: string }
+interface texts_style { text: text_style[], align_style: string, font_size: number, font_type: string };
+
+interface boxes_info { task: string, start: point, length?: number, end?: point };
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
 @Injectable({
@@ -203,6 +205,7 @@ class TimelineDataAndFunction {
         }
         return;
     }
+
 
 
 }
