@@ -14,32 +14,33 @@ import { DrawService } from '../../service/draw.service';
 })
 export class TimelineComponent implements OnInit {
 
-  canvas: HTMLCanvasElement;
-  draw_map: CanvasRenderingContext2D;
+  timeline_canvas: HTMLCanvasElement;
+  timeline_drawmap: CanvasRenderingContext2D;
+  task_canvas: HTMLCanvasElement;
+  task_drawmap: CanvasRenderingContext2D;
   constructor(private draw: DrawService, private tl_daf: TimelineDataAndFunction, private render: Renderer2) { }
 
   /**
    * @description 改变窗口大小时，更新值的方法
    */
   private update(): void {
-    let canvas_area = { area_width: this.canvas.parentElement.offsetWidth, area_height: this.canvas.parentElement.offsetHeight };
+    /**更新time_line Canvas画布,重新绘制背景 */
+    this.timeline_drawmap = this.tl_daf.timelineSelfAdaption(this.timeline_canvas, current_mode.day);
 
-    this.tl_daf.timelineSelfAdaption(canvas_area, current_mode.day);
-    this.canvas.width = canvas_area.area_width;
-    this.canvas.height = canvas_area.area_height;
-    this.draw_map = this.canvas.getContext("2d");
-    let timeline_day = this.tl_daf.getLinesInfo(1);
-    this.draw.drawLine(this.draw_map, timeline_day);
-    this.draw.drawText(this.draw_map, this.tl_daf.getTimeTextInfo(current_mode.day));
+    this.draw.drawLine(this.timeline_drawmap, [this.tl_daf.getLinesInfo()]);
+    this.draw.drawText(this.timeline_drawmap, this.tl_daf.getTimeTextInfo());
 
-    let test_box: boxes_info = { start: { x: 0, y: 0 }, task: "测试任务1" };
-    test_box.start = { x: 500, y: 200 };
-    test_box.length = 200;
-    this.draw.drawBox(this.draw_map, (timeline_day[0][timeline_day.length - 1].end.x - timeline_day[0][0].start.x), (timeline_day[0][0].end.y - timeline_day[0][0].start.y), [test_box]);
+    /**更新time_line Canvas画布,重新绘制背景 */
+    let test_box: boxes_info = { start: { x: 500, y: 200 }, task: "test", width: 200, height: 100 };
+
+    this.task_drawmap = this.task_canvas.getContext("2d");
+    this.task_drawmap = this.tl_daf.taskSelfAdaption(this.task_canvas, current_mode.day);
+    this.draw.drawBox(this.task_drawmap, [test_box]);
   }
 
   ngOnInit(): void {
-    this.canvas = this.render.selectRootElement("#timeline_canvas");
+    this.timeline_canvas = this.render.selectRootElement("#timeline_canvas");
+    this.task_canvas = this.render.selectRootElement("#task_canvas");
     this.update();
 
     fromEvent(window, 'resize').subscribe((event) => {

@@ -10,6 +10,7 @@ interface point { x: number, y: number; };
 })
 
 class DrawService {
+  box_color = [];
   constructor() { }
 
   /**
@@ -18,6 +19,7 @@ class DrawService {
    * @param {[[{ start: point; end: point; }]]} lines_info 需要绘制的线的信息
    */
   drawLine(draw_map: CanvasRenderingContext2D, lines_info: { start: point; end: point; }[][]) {
+    draw_map.strokeStyle = "#000";
     for (let i = 0; i < lines_info.length; i++) {
       for (let j = 0; j < lines_info[i].length; j++) {
         draw_map.beginPath();
@@ -54,22 +56,16 @@ class DrawService {
   * @param {CanvasRenderingContext2D} draw_map 传入可绘制区域信息,即 canvas.getContext('2D')
   * @param boxes_info 需要绘制的框的信息
   */
-  drawBox(draw_map: CanvasRenderingContext2D, timeline_width: number, timeline_height: number, boxes_info: { task: string, start: point, length?: number, end?: point }[]) {
-    let box_height: number;
-    if (boxes_info.length < 8) {
-      box_height = timeline_height >> 3;
-    } else {
-      box_height = boxes_info.length;
-    }
-
+  drawBox(draw_map: CanvasRenderingContext2D, boxes_info: { task: string, start: point, width: number, height: number }[]) {
+    draw_map.globalAlpha = 1;
     for (let i = 0; i < boxes_info.length; i++) {
       draw_map.beginPath();
-      draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].length, box_height);
+      draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
       draw_map.stroke();
-      draw_map.fillStyle = "#FF0000";
-      draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].length, box_height);
+      draw_map.fillStyle = "rgba(100,30,100,1)";
+      draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
       draw_map.fillStyle = "#000000";
-      this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].length / 2), y: (boxes_info[i].start.y + box_height / 2 + 15) } }], align_style: "center", font_size: 30, font_type: "Microsoft YaHei" });
+      this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + 15) } }], align_style: "center", font_size: 30, font_type: "Microsoft YaHei" });
 
     }
   }
