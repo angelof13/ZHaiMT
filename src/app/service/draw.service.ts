@@ -45,7 +45,6 @@ class DrawService {
     }
     draw_map.font = texts_info.font_size + "px " + texts_info.font_type;
     for (let i = 0; i < texts_info.text.length; i++) {
-      draw_map.beginPath();
       draw_map.fillText(texts_info.text[i].content, texts_info.text[i].draw.x, texts_info.text[i].draw.y);
       draw_map.stroke();
     }
