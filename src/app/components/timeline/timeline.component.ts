@@ -30,15 +30,14 @@ export class TimelineComponent implements OnInit {
     this.draw.drawLine(this.timeline_drawmap, [this.tl_daf.getLinesInfo()]);
     this.draw.drawText(this.timeline_drawmap, this.tl_daf.getTimeTextInfo());
 
-    /**更新time_line Canvas画布,重新绘制背景 */
-    let test_box: boxes_info = { start: { x: 500, y: 200 }, task: "test", width: 200, height: 100 };
 
     this.task_drawmap = this.task_canvas.getContext("2d");
     this.task_drawmap = this.tl_daf.taskSelfAdaption(this.task_canvas, current_mode.day);
-    this.draw.drawBox(this.task_drawmap, [test_box]);
+    this.draw.drawBox(this.task_drawmap, this.tl_daf.getViewTaskBox());
   }
 
   ngOnInit(): void {
+    this.tl_daf.init();
     this.timeline_canvas = this.render.selectRootElement("#timeline_canvas");
     this.task_canvas = this.render.selectRootElement("#task_canvas");
     this.update();

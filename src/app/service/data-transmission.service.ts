@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 
+export { DataTransmissionService }
 @Injectable({
   providedIn: 'root'
 })
 
-export class DataTransmissionService {
+class DataTransmissionService {
   private db;
   private db_open_request;
   private db_objectstore;
@@ -13,23 +14,25 @@ export class DataTransmissionService {
   constructor() { }
 
   init(table_name: string, table_result: any) {
-    let _this = this;
-    this.db_open_request = window.indexedDB.open("zhaimt_DB", 1);
-    this.db_open_request.onerror = function () {
-      console.log('本地数据库打开失败');
-    }
-    this.db_open_request.onsuccess = function (event) {
-      _this.db = event.target.result;
-      _this.db_operate_table = table_name;
-      this.get_all_value(table_result);
-    }
-    this.db_open_request.onupgradeneeded = function (this: IDBRequest, event) {
-      _this.db = event.target.result;
-      let objectStore;
-      if (!_this.db.objectStoreNames.contains(table_name)) {
-        objectStore = _this.db.createObjectStore(table_name, { autoIncrement: true });
+    if (this.db_operate_table != table_name) {
+      let _this = this;
+      this.db_open_request = window.indexedDB.open("zhaimt_DB", 1);
+      this.db_open_request.onerror = function () {
+        console.log('本地数据库打开失败');
       }
-      _this.db_operate_table = table_name;
+      this.db_open_request.onsuccess = function (event) {
+        _this.db = event.target.result;
+        _this.db_operate_table = table_name;
+        _this.get_all_value(table_result);
+      }
+      this.db_open_request.onupgradeneeded = function (this: IDBRequest, event) {
+        _this.db = event.target.result;
+        let objectStore;
+        if (!_this.db.objectStoreNames.contains(table_name)) {
+          objectStore = _this.db.createObjectStore(table_name, { autoIncrement: true });
+        }
+        _this.db_operate_table = table_name;
+      }
     }
   }
   set_value(value: any) {
