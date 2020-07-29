@@ -29,7 +29,7 @@ class DataTransmissionService {
         _this.db = event.target.result;
         let objectStore;
         if (!_this.db.objectStoreNames.contains(table_name)) {
-          objectStore = _this.db.createObjectStore(table_name, { autoIncrement: true });
+          objectStore = _this.db.createObjectStore(table_name, { keyPath: "value.id", autoIncrement: true });
         }
         _this.db_operate_table = table_name;
       }
@@ -56,6 +56,6 @@ class DataTransmissionService {
 
   remove_value(value: any) {
     this.db_objectstore = this.db.transaction([this.db_operate_table], 'readwrite').objectStore(this.db_operate_table);
-    let DB_result = this.db_objectstore.delete(value.work);
+    let DB_result = this.db_objectstore.delete(value);
   }
 }

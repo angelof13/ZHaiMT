@@ -29,7 +29,7 @@ interface texts_style { text: { content: string; draw: point; }[], align_style: 
  */
 interface boxes_info { task: string, start: point, width: number, height: number };
 
-interface task_info { task: string, start_time: number, end_time: number, daily_repeat: boolean, isEnd: boolean }
+interface task_info { id: number, task: string, start_time: number, end_time: number, daily_repeat: boolean, isEnd: boolean }
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
 @Injectable({
@@ -194,8 +194,9 @@ class TimelineDataAndFunction {
 
         this.task_boxes = [];
         if (this.task_all.length != 0) {
+            console.log(this.task_all);
             for (let task_num = 0; task_num < this.task_all.length; task_num++) {
-                let temp: boxes_info;
+                let temp: boxes_info = { task: "", width: 0, height: 0, start: { x: 0, y: 0 } };
                 if (this.task_all[task_num].daily_repeat == true) {
 
                 }
@@ -232,7 +233,7 @@ class TimelineDataAndFunction {
             let temp_height = (task_canvas.height / temp_n) | 0;
             for (let task_view = 0; task_view < this.task_boxes.length; task_view++) {
                 this.task_boxes[task_view].start.y = temp_height * task_view;
-                this.task_boxes[task_view].height = task_view;
+                this.task_boxes[task_view].height = temp_height;
             }
         }
         if (type == current_mode.day) {

@@ -23,6 +23,7 @@
   position:absolute;
   left: 0px;
   top: 0px;
+  z-index: 1;
 }
 #task_canvas{
   margin: 0px;
@@ -30,4 +31,39 @@
   position:absolute;
   left: 0px;
   top: 0px;
+  z-index: 2;
+}
+
+
+
+#rightMenu {
+  position:absolute;
+  width: 100px;
+  background: white;
+  box-shadow: 2px 2px 8px 1px #888888;
+  display: none;
+  z-index: 3;
+}
+#rightMenu ul {
+  list-style: none;
+  width: 100%;
+  margin: 0px;
+  float: left;
+  padding-left: 0px;
+}
+#rightMenu ul li{
+  display: inline-block;
+  text-decoration: none;
+  color: #555;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  cursor: pointer;
+}
+#rightMenu ul li:first-of-type {
+  border-radius: 5px 5px 0 0;
+}
+#rightMenu ul li:hover{
+  background: #eee;
+  color: #CC1A1A;
 }
