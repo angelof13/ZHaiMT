@@ -27,6 +27,7 @@ class DrawService {
         draw_map.lineTo(lines_info[i][j].end.x, lines_info[i][j].end.y);
         draw_map.stroke();
       }
+      draw_map.beginPath();
     }
   }
 

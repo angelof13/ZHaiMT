@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataTransmissionService } from "../../service/data-transmission.service"
 
-export { TimelineDataAndFunction, current_mode, boxes_info }
+export { TimelineDataAndFunction, current_mode, boxes_info, task_info }
 
 /**************************************************************************************数据类型接口************************************************************************************************************/
 interface point { x: number, y: number; };
@@ -29,7 +29,7 @@ interface texts_style { text: { content: string; draw: point; }[], align_style: 
  */
 interface boxes_info { task: string, start: point, width: number, height: number };
 
-interface task_info { id: number, task: string, start_time: number, end_time: number, daily_repeat: boolean, isEnd: boolean }
+interface task_info { id?: number, task: string, start_time: number, end_time: number, daily_repeat: boolean, is_end: boolean }
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
 @Injectable({
@@ -116,8 +116,10 @@ class TimelineDataAndFunction {
         return this.task_boxes;
     }
 
-    init() {
+    init(timeline_canvas, task_canvas) {
         this.op_db.init("task_table", this.task_all);
+        this.reRight(timeline_canvas, "mainRight");
+        this.reRight(task_canvas, "mainRight");
     }
     /**
      * @description 自适应修改背景坐标
@@ -244,6 +246,28 @@ class TimelineDataAndFunction {
 
         }
         return task_canvas.getContext("2d");
+    }
+
+    private reRight(element, rightMenu) {
+        let Menu = document.getElementById(rightMenu);
+        //自定义右键菜单
+        element.oncontextmenu = function (event) {
+            //let event = event || window.event;
+            Menu.style.display = "block";
+            Menu.style.top = event.clientY + "px";
+            Menu.style.left = event.clientX + "px";
+            return false;
+        };
+        //点击隐藏菜单
+        element.onclick = function () {
+            Menu.style.display = "none"
+        };
+    }
+
+    addTask(e) {
+        let Menu = document.getElementsByClassName("rightMenu");
+        console.log(e);
+        (<HTMLElement>Menu[0]).style.display = "none";
     }
 }
 

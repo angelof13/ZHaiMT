@@ -1,6 +1,7 @@
 
-
+/**直观页面**/
 #background {
+  position:relative;
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -11,7 +12,6 @@
 }
 
 #timeTable {
-  position:relative;
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -34,24 +34,60 @@
   z-index: 2;
 }
 
-
-
-#rightMenu {
+/**任务信息**/
+#task{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
   position:absolute;
-  width: 100px;
+  background-color: rgba(110,110,110,0.3);
+  display: none;
+  z-index: 3;
+}
+#taskInfo{
+  margin: 0px;
+  padding: 0px;
+  position:absolute;
+  width: 320px;
+  height: 180px;
+  top:400px;
+  left: 40%;
+  border: solid 1px rgba(80,80,80,1);
+  background-color: rgba(110,110,110,1);
+  border-radius: 3px;
+}
+.timeInput{
+  width: 100%;
+  padding: 5px 0;
+}
+#taskWork{
+
+}
+textarea{
+  resize: none;
+  outline: none;
+}
+input{
+  outline: none;
+}
+
+/**右键菜单**/
+.rightMenu {
+  position:absolute;
   background: white;
   box-shadow: 2px 2px 8px 1px #888888;
   display: none;
   z-index: 3;
 }
-#rightMenu ul {
+.rightMenu ul {
   list-style: none;
   width: 100%;
   margin: 0px;
   float: left;
   padding-left: 0px;
 }
-#rightMenu ul li{
+.rightMenu ul li{
   display: inline-block;
   text-decoration: none;
   color: #555;
@@ -60,10 +96,11 @@
   text-align: center;
   cursor: pointer;
 }
-#rightMenu ul li:first-of-type {
+.rightMenu ul li:first-of-type {
   border-radius: 5px 5px 0 0;
 }
-#rightMenu ul li:hover{
+.rightMenu ul li:hover{
   background: #eee;
   color: #CC1A1A;
 }
+
