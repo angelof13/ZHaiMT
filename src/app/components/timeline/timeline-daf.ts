@@ -118,8 +118,8 @@ class TimelineDataAndFunction {
 
     init(timeline_canvas, task_canvas) {
         this.op_db.init("task_table", this.task_all);
-        this.reRight(timeline_canvas, "mainRight");
-        this.reRight(task_canvas, "mainRight");
+        this.reRight(timeline_canvas, "main_right");
+        this.reRight(task_canvas, "main_right");
     }
     /**
      * @description 自适应修改背景坐标
@@ -265,9 +265,8 @@ class TimelineDataAndFunction {
     }
 
     addTask(e) {
-        let Menu = document.getElementsByClassName("rightMenu");
+        document.getElementById("main_right").style.display = "none";
         console.log(e);
-        (<HTMLElement>Menu[0]).style.display = "none";
     }
 }
 

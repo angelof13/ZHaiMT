@@ -11,7 +11,7 @@
   overflow-y: hidden;
 }
 
-#timeTable {
+#time_table {
   margin: 0px;
   padding: 0px;
   width: 100%;
@@ -41,53 +41,61 @@
   width: 100%;
   height: 100%;
   position:absolute;
-  background-color: rgba(110,110,110,0.3);
+  background-color: rgba(110,110,110,0.6);
   display: none;
   z-index: 3;
 }
-#taskInfo{
+#task:visited{
+  display: none;
+}
+#task_info{
   margin: 0px;
   padding: 0px;
   position:absolute;
   width: 320px;
-  height: 180px;
+  height: 200px;
   top:400px;
   left: 40%;
-  border: solid 1px rgba(80,80,80,1);
-  background-color: rgba(110,110,110,1);
+  background-color: rgb(192, 192, 192);
+  box-shadow: 2px 2px 8px 1px #888888;
   border-radius: 3px;
+  text-align:center;
 }
-.timeInput{
+.time_input{
   width: 100%;
   padding: 5px 0;
 }
-#taskWork{
-
+#task_work{
+  
 }
-textarea{
+.input_info_text{
+  text-shadow: 1px 1px 8px 1px #888888;
+}
+.input_info{
   resize: none;
   outline: none;
-}
-input{
-  outline: none;
+  border: none;
+  width: 200px;
+  background-color: rgb(240, 240, 240);
+  box-shadow: 1px 1px 4px 1px #888888;
 }
 
 /**右键菜单**/
-.rightMenu {
+.right_menu {
   position:absolute;
   background: white;
   box-shadow: 2px 2px 8px 1px #888888;
   display: none;
   z-index: 3;
 }
-.rightMenu ul {
+.right_menu ul {
   list-style: none;
   width: 100%;
   margin: 0px;
   float: left;
   padding-left: 0px;
 }
-.rightMenu ul li{
+.right_menu ul li{
   display: inline-block;
   text-decoration: none;
   color: #555;
@@ -96,10 +104,10 @@ input{
   text-align: center;
   cursor: pointer;
 }
-.rightMenu ul li:first-of-type {
+.right_menu ul li:first-of-type {
   border-radius: 5px 5px 0 0;
 }
-.rightMenu ul li:hover{
+.right_menu ul li:hover{
   background: #eee;
   color: #CC1A1A;
 }

@@ -41,7 +41,7 @@ export class TimelineComponent implements OnInit {
   }
   timelineSet(e) {
 
-    console.log((<HTMLInputElement>this.render.selectRootElement("#taskStartTime")).value);
+    console.log((<HTMLInputElement>this.render.selectRootElement("#task_start_time")).value);
     console.log(this.temp_task_starttime);
     this.tl_daf.addTask(e);
   }

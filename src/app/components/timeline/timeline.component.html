@@ -1,38 +1,38 @@
 <div id="background">
-  <div id="task">
-    <table id="taskInfo">
-      <tr class="timeInput">
-        <td>开始时间:</td>
-        <td><input id="taskStartTime" type="datetime-local" value="{{temp_task_starttime}}" /></td>
-      </tr>
-      <tr class="timeInput">
-        <td>结束时间:</td>
-        <td><input id="taskStartTime" type="datetime-local" value="{{temp_task_endtime}}" /></td>
-      </tr>
-      <tr id="taskWork">
-        <td>计划事务:</td>
-        <td><textarea></textarea></td>
-      </tr>
-      <tr>
-        <td><button>提交</button></td>
-        <td> <button>取消</button></td>
-      </tr>
-    </table>
-  </div>
-  <div id="timeTable">
-    <canvas id="task_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-    <canvas id="timeline_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-  </div>
-  <div id="mainRight" class="rightMenu">
-    <ul>
-      <li (click)="addTask($event)">增加任务</li>
-      <li (click)="timelineSet($event)">设置</li>
-    </ul>
-  </div>
-  <div id="taskRight" class="rightMenu">
-    <ul>
-      <li (click)="changeTask($event)">修改</li>
-      <li (click)="deleteTask($event)">删除</li>
-    </ul>
-  </div>
+    <div id="task">
+        <table id="task_info">
+            <tr class="time_input">
+                <td class="input_info_text">开始时间:</td>
+                <td><input id="task_start_time" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" /></td>
+            </tr>
+            <tr class="time_input">
+                <td class="input_info_text">结束时间:</td>
+                <td><input id="task_end_time" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" />
+                </td>
+            </tr>
+            <tr id="task_work">
+                <td class="input_info_text">计划事务:</td>
+                <td><textarea class="input_info"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="task_info_btn">提交</button></td>
+            </tr>
+        </table>
+    </div>
+    <div id="time_table">
+        <canvas id="task_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="timeline_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+    </div>
+    <div id="main_right" class="right_menu">
+        <ul>
+            <li (click)="addTask($event)">增加任务</li>
+            <li (click)="timelineSet($event)">设置</li>
+        </ul>
+    </div>
+    <div id="task_right" class="right_menu">
+        <ul>
+            <li (click)="changeTask($event)">修改</li>
+            <li (click)="deleteTask($event)">删除</li>
+        </ul>
+    </div>
 </div>
