@@ -116,10 +116,8 @@ class TimelineDataAndFunction {
         return this.task_boxes;
     }
 
-    init(timeline_canvas, task_canvas) {
+    init() {
         this.op_db.init("task_table", this.task_all);
-        this.reRight(timeline_canvas, "main_right");
-        this.reRight(task_canvas, "main_right");
     }
     /**
      * @description 自适应修改背景坐标
@@ -248,7 +246,7 @@ class TimelineDataAndFunction {
         return task_canvas.getContext("2d");
     }
 
-    private reRight(element, rightMenu) {
+    reRight(element, rightMenu) {
         let Menu = document.getElementById(rightMenu);
         //自定义右键菜单
         element.oncontextmenu = function (event) {
@@ -265,7 +263,6 @@ class TimelineDataAndFunction {
     }
 
     addTask(e) {
-        document.getElementById("main_right").style.display = "none";
         console.log(e);
     }
 }

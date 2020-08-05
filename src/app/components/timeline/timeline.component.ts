@@ -31,6 +31,7 @@ export class TimelineComponent implements OnInit {
     this.temp_task_starttime = this.datepipe.transform(temp, "yyyy-MM-ddTHH:mm:ss");
     this.temp_task_endtime = this.temp_task_starttime;
     document.getElementById("task").style.display = "block";
+    document.getElementById("main_right").style.display = "none";
     this.tl_daf.addTask(e);
   }
   changeTask(e) {
@@ -66,10 +67,17 @@ export class TimelineComponent implements OnInit {
     this.timeline_canvas = this.render.selectRootElement("#timeline_canvas");
     this.task_canvas = this.render.selectRootElement("#task_canvas");
 
+    this.tl_daf.reRight(this.timeline_canvas, "main_right");
+    this.tl_daf.reRight(this.task_canvas, "main_right");
+    document.getElementById("task").onclick = function (event) {
+      console.log(event);
+      document.getElementById("task").style.display = "none";
+    }
+
   }
   ngOnInit(): void {
     this.init();
-    this.tl_daf.init(this.timeline_canvas, this.task_canvas);
+    this.tl_daf.init();
     this.update();
     fromEvent(window, 'resize').subscribe((event) => {
       //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
