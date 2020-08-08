@@ -21,13 +21,12 @@ class DrawService {
   drawLine(draw_map: CanvasRenderingContext2D, lines_info: { start: point; end: point; }[][]) {
     draw_map.strokeStyle = "#000";
     for (let i = 0; i < lines_info.length; i++) {
+      draw_map.beginPath();
       for (let j = 0; j < lines_info[i].length; j++) {
-        draw_map.beginPath();
         draw_map.moveTo(lines_info[i][j].start.x, lines_info[i][j].start.y);
         draw_map.lineTo(lines_info[i][j].end.x, lines_info[i][j].end.y);
-        draw_map.stroke();
       }
-      draw_map.beginPath();
+      draw_map.stroke();
     }
   }
 
@@ -45,10 +44,11 @@ class DrawService {
       case "right": draw_map.textAlign = "right"; break;
     }
     draw_map.font = texts_info.font_size + "px " + texts_info.font_type;
+    draw_map.beginPath();
     for (let i = 0; i < texts_info.text.length; i++) {
       draw_map.fillText(texts_info.text[i].content, texts_info.text[i].draw.x, texts_info.text[i].draw.y);
-      draw_map.stroke();
     }
+    draw_map.stroke();
   }
 
   /**

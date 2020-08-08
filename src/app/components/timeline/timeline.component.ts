@@ -5,7 +5,6 @@ import { TimelineDataAndFunction, current_mode, task_info } from './timeline-daf
 
 import { DrawService } from '../../service/draw.service';
 import { DatePipe } from '@angular/common';
-//import { TimelineAdaptioneService } from '../../service/timeline-adaptione.service'
 
 
 @Component({
