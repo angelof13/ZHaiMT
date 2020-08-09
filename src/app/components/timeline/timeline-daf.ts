@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Directive, Injectable, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { DataTransmissionService } from "../../service/data-transmission.service"
 
 export { TimelineDataAndFunction, current_mode, boxes_info, task_info }
@@ -32,6 +32,9 @@ interface boxes_info { task: string, start: point, width: number, height: number
 interface task_info { id?: number, task: string, start_time: number, end_time: number, daily_repeat: boolean, is_end: boolean }
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
+@Directive({
+    selector: 'app-timeline'
+})
 @Injectable({
     providedIn: 'root'
 })
@@ -58,6 +61,7 @@ class TimelineDataAndFunction {
     */
     private space = 0.02;
 
+    @ViewChild("main_right") task_main_right: ElementRef;
     /**
      * @description 常用时间计数,单位ms,减少计算
      */
@@ -83,7 +87,7 @@ class TimelineDataAndFunction {
 
     private task_boxes: boxes_info[] = [];
 
-    constructor(private op_db: DataTransmissionService) { }
+    constructor(private op_db: DataTransmissionService, private render: Renderer2) { }
     /**
      * @param end_number 初始化后数组中成员个数
      */
@@ -237,24 +241,7 @@ class TimelineDataAndFunction {
         return task_canvas.getContext("2d");
     }
 
-    reRight(element, rightMenu) {
-        let Menu = document.getElementById(rightMenu);
-        //自定义右键菜单
-        element.oncontextmenu = function (event) {
-            //let event = event || window.event;
-            Menu.style.display = "block";
-            Menu.style.top = event.clientY + "px";
-            Menu.style.left = event.clientX + "px";
-            return false;
-        };
-        //点击隐藏菜单
-        element.onclick = function () {
-            Menu.style.display = "none"
-        };
-    }
-
     addTask(e) {
-        console.log(e);
     }
 }
 

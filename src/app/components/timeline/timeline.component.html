@@ -1,40 +1,45 @@
 <div id="background" oncontextmenu="return false">
-    <div id="task">
-        <table id="task_info" onClick="event.cancelBubble = true">
-            <tr class="time_input">
+    <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (click)="task_table_hide()" (contextmenu)="task_table_hide()">
+        <table id="task_info" onClick="event.cancelBubble = true" #task_info>
+            <tr>
                 <td class="input_info_text">开始时间:</td>
-                <td><input id="task_start_time" class="input_info" type="datetime-local"
-                        value="{{temp_task_starttime}}" /></td>
+                <td><input id="task_start_time" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" /></td>
             </tr>
-            <tr class="time_input">
+            <tr>
                 <td class="input_info_text">结束时间:</td>
-                <td><input id="task_end_time" class="input_info" type="datetime-local" value="{{temp_task_endtime}}"
-                        min="{{temp_task_endtime}}" />
+                <td><input id="task_end_time" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" />
                 </td>
             </tr>
-            <tr id="task_work">
+            <tr>
                 <td class="input_info_text">计划事务:</td>
                 <td><textarea id="input_task" class="input_info"></textarea></td>
             </tr>
-            <tr id="task_btn">
-                <td colspan="2"><input type="checkbox" />每日重复 <button class="task_info_btn">提交</button></td>
+            <tr>
+                <td class="input_info_text">周期规则:</td>
+                <td><span class="task_cycle" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="0" checked="checked">一次</span>
+                    <span class="task_cycle" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="1">每天</span>
+                    <span class="task_cycle disabled" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="2" disabled>每月</span>
+                    <span class="task_cycle disabled" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="3" disabled>每年</span></td>
+            </tr>
+            <tr>
+                <td colspan="2"> <button class="task_info_btn" (click)="addTask()">提交</button></td>
             </tr>
         </table>
     </div>
     <div id="time_table">
-        <canvas id="task_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-        <canvas id="timeline_canvas" width="300" height="400">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="task_canvas" width="300" height="400" (click)="main_right_hide()" (contextmenu)="main_right_view($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="timeline_canvas" width="300" height="400" (click)="main_right_hide()" (contextmenu)="main_right_view($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
     </div>
-    <div id="main_right" class="right_menu">
+    <div id="main_right" class="right_menu" [ngStyle]="{'display':task_main_right_style.style_display?'block':'none',  'top':task_main_right_style.style_top+'px',  'left':task_main_right_style.style_left+'px'}">
         <ul>
-            <li (click)="addTask($event)">增加任务</li>
-            <li (click)="timelineSet($event)">设置</li>
+            <li (click)="addTaskView($event)">增加任务</li>
+            <li (click)="timelineSetView($event)">设置</li>
         </ul>
     </div>
     <div id="task_right" class="right_menu">
         <ul>
-            <li (click)="changeTask($event)">修改</li>
-            <li (click)="deleteTask($event)">删除</li>
+            <li (click)="changeTaskView($event)">修改</li>
+            <li (click)="deleteTaskView($event)">删除</li>
         </ul>
     </div>
 </div>
