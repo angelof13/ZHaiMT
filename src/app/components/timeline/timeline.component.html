@@ -1,18 +1,17 @@
 <div id="background" oncontextmenu="return false">
     <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (click)="task_table_hide()" (contextmenu)="task_table_hide()">
-        <table id="task_info" onClick="event.cancelBubble = true" #task_info>
+        <table id="task_info" onClick="event.cancelBubble = true">
             <tr>
                 <td class="input_info_text">开始时间:</td>
-                <td><input id="task_start_time" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" /></td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" #task_start_time/></td>
             </tr>
             <tr>
                 <td class="input_info_text">结束时间:</td>
-                <td><input id="task_end_time" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" />
-                </td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" #task_end_time/></td>
             </tr>
             <tr>
                 <td class="input_info_text">计划事务:</td>
-                <td><textarea id="input_task" class="input_info"></textarea></td>
+                <td><textarea id="input_task" class="input_info" #input_task></textarea></td>
             </tr>
             <tr>
                 <td class="input_info_text">周期规则:</td>

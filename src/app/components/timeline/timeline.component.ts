@@ -19,7 +19,9 @@ export class TimelineComponent implements OnInit {
     timeline_drawmap: CanvasRenderingContext2D;
     task_canvas: HTMLCanvasElement;
     task_drawmap: CanvasRenderingContext2D;
-    @ViewChild('task_info') task_table: ElementRef;
+    @ViewChild('task_start_time') task_start_time: ElementRef;
+    @ViewChild('task_end_time') task_end_time: ElementRef;
+    @ViewChild('input_task') input_task: ElementRef;
     temp_task_info: task_info;
     temp_task_starttime: string;
     temp_task_endtime: string;
@@ -59,7 +61,18 @@ export class TimelineComponent implements OnInit {
      * @description 添加任务
      */
     addTask() {
-        console.log((<HTMLTableElement>this.task_table.nativeElement).getElementsByTagName('input'));
+        let start_time = new Date(this.task_start_time.nativeElement.value).getTime(), end_time = new Date(this.task_end_time.nativeElement.value).getTime();
+        
+        console.log(start_time);
+        console.log(end_time);
+        if (start_time >= end_time) {
+            return false;
+        } else {
+            this.temp_task_info.task = this.input_task.nativeElement.value;
+            this.temp_task_info.start_time = start_time;
+            this.temp_task_info.end_time = end_time;
+        }
+        console.log(this.temp_task_info);
     }
 
     /**
@@ -88,8 +101,6 @@ export class TimelineComponent implements OnInit {
      * @description timeline界面信息的设置界面
      */
     timelineSetView(e) {
-        console.log((<HTMLInputElement>this.render.selectRootElement("#task_start_time")).value);
-        console.log(this.temp_task_starttime);
         this.task_main_right_style.style_display = 0;
     }
     /**
