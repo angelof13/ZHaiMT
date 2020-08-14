@@ -3,11 +3,11 @@
         <table id="task_info" onClick="event.cancelBubble = true">
             <tr>
                 <td class="input_info_text">开始时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" #task_start_time/></td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" (change) = "onDateChange(0,$event.target.value)" #task_start_time/></td>
             </tr>
             <tr>
                 <td class="input_info_text">结束时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" #task_end_time/></td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" (change) = "onDateChange(1,$event.target.value)" #task_end_time/></td>
             </tr>
             <tr>
                 <td class="input_info_text">计划事务:</td>

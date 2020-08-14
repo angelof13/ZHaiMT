@@ -57,22 +57,33 @@ export class TimelineComponent implements OnInit {
     checkedCycle(e) {
         e.target.firstChild.checked = "checked";
     }
+
+    onDateChange(temp:number,value:string) {
+        if (0 == temp) {
+            this.temp_task_starttime = value;
+        } else {
+            this.temp_task_endtime = value;
+        }
+    }
     /**
      * @description 添加任务
      */
     addTask() {
-        let start_time = new Date(this.task_start_time.nativeElement.value).getTime(), end_time = new Date(this.task_end_time.nativeElement.value).getTime();
-        
-        console.log(start_time);
-        console.log(end_time);
-        if (start_time >= end_time) {
-            return false;
-        } else {
-            this.temp_task_info.task = this.input_task.nativeElement.value;
-            this.temp_task_info.start_time = start_time;
-            this.temp_task_info.end_time = end_time;
-        }
-        console.log(this.temp_task_info);
+        console.log("starttime:",this.temp_task_starttime);
+        console.log("endtime:", this.temp_task_endtime);
+        console.log(this.task_end_time.nativeElement.value);
+        //let start_time = new Date(this.task_start_time.nativeElement.value).getTime(), end_time = new Date(this.task_end_time.nativeElement.value).getTime();
+        //
+        //console.log(start_time);
+        //console.log(end_time);
+        //if (start_time >= end_time) {
+        //    return false;
+        //} else {
+        //    this.temp_task_info.task = this.input_task.nativeElement.value;
+        //    this.temp_task_info.start_time = start_time;
+        //    this.temp_task_info.end_time = end_time;
+        //}
+        //console.log(this.temp_task_info);
     }
 
     /**
