@@ -58,7 +58,7 @@ export class TimelineComponent implements OnInit {
         e.target.firstChild.checked = "checked";
     }
 
-    onDateChange(temp:number,value:string) {
+    onDateChange(temp: number, value: string) {
         if (0 == temp) {
             this.temp_task_starttime = value;
         } else {
