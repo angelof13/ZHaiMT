@@ -29,7 +29,7 @@ interface texts_style { text: { content: string; draw: point; }[], align_style: 
  */
 interface boxes_info { task: string, start: point, width: number, height: number };
 
-interface task_info { id?: number, task: string, start_time: number, end_time: number, daily_repeat: boolean, is_end: boolean }
+interface task_info { id?: number, task: string, start_time: number, end_time: number, cycle: number, is_end: boolean }
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
 @Directive({
@@ -200,7 +200,7 @@ class TimelineDataAndFunction {
         if (this.task_all.length != 0) {
             for (let task_num = 0; task_num < this.task_all.length; task_num++) {
                 let temp: boxes_info = { task: "", width: 0, height: 0, start: { x: 0, y: 0 } };
-                if (this.task_all[task_num].daily_repeat == true) {
+                if (this.task_all[task_num].cycle == 1) {
 
                 }
                 if ((this.task_all[task_num].start_time <= this.start_time) && (this.task_all[task_num].end_time > this.start_time && this.task_all[task_num].end_time <= this.end_time)) {
@@ -241,7 +241,9 @@ class TimelineDataAndFunction {
         return task_canvas.getContext("2d");
     }
 
-    addTask(e) {
+    addTask(task: task_info) {
+        this.op_db.set_value(task);
+        this.task_all.push(task);
     }
 }
 

@@ -25,6 +25,13 @@ export class TimelineComponent implements OnInit {
     temp_task_info: task_info;
     temp_task_starttime: string;
     temp_task_endtime: string;
+    task_cycles: { cycle: string; value: number; is_use: boolean }[] = [
+        { cycle: '一次', value: 0, is_use: true },
+        { cycle: '每天', value: 1, is_use: true },
+        { cycle: '每月', value: 2, is_use: false },
+        { cycle: '每年', value: 3, is_use: false },
+    ];
+    task_select_cycles: number = 0;
 
     task_main_right_style: { style_display: number, style_top: number, style_left: number }
     task_table_style: { style_display: number };
@@ -52,10 +59,10 @@ export class TimelineComponent implements OnInit {
     deleteTaskView(e) {
     }
     /**
-     * @description 设置循环模式
+     * @description 设置循环周期
      */
-    checkedCycle(e) {
-        e.target.firstChild.checked = "checked";
+    selectCycle(radio) {
+        this.task_select_cycles = radio;
     }
 
     onDateChange(temp: number, value: string) {
@@ -69,9 +76,16 @@ export class TimelineComponent implements OnInit {
      * @description 添加任务
      */
     addTask() {
-        console.log("starttime:",this.temp_task_starttime);
-        console.log("endtime:", this.temp_task_endtime);
-        console.log(this.task_end_time.nativeElement.value);
+        this.temp_task_info.start_time = new Date(this.temp_task_starttime).getTime();
+        this.temp_task_info.end_time = new Date(this.temp_task_endtime).getTime();
+        this.temp_task_info.cycle = this.task_select_cycles;
+        this.temp_task_info.task = this.input_task.nativeElement.value;
+        if (this.temp_task_info.task != "") {
+            this.tl_daf.addTask(this.temp_task_info);
+            console.log(this.temp_task_info);
+            this.temp_task_info.task = "";
+        }
+        this.update();
         //let start_time = new Date(this.task_start_time.nativeElement.value).getTime(), end_time = new Date(this.task_end_time.nativeElement.value).getTime();
         //
         //console.log(start_time);
@@ -131,7 +145,7 @@ export class TimelineComponent implements OnInit {
     private init() {
         this.task_main_right_style = { style_display: 0, style_top: 0, style_left: 0 };
         this.task_table_style = { style_display: 0 };
-        this.temp_task_info = { task: "", start_time: 0, end_time: 0, daily_repeat: false, is_end: false };
+        this.temp_task_info = { task: "", start_time: 0, end_time: 0, cycle: 0, is_end: false };
         this.timeline_canvas = this.render.selectRootElement("#timeline_canvas");
         this.task_canvas = this.render.selectRootElement("#task_canvas");
     }

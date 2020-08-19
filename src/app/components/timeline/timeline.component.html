@@ -1,13 +1,13 @@
 <div id="background" oncontextmenu="return false">
-    <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (click)="task_table_hide()" (contextmenu)="task_table_hide()">
+    <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (contextmenu)="task_table_hide()">
         <table id="task_info" onClick="event.cancelBubble = true">
             <tr>
                 <td class="input_info_text">开始时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" (change) = "onDateChange(0,$event.target.value)" #task_start_time/></td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" (change)="onDateChange(0,$event.target.value)" #task_start_time /></td>
             </tr>
             <tr>
                 <td class="input_info_text">结束时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" (change) = "onDateChange(1,$event.target.value)" #task_end_time/></td>
+                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" (change)="onDateChange(1,$event.target.value)" #task_end_time /></td>
             </tr>
             <tr>
                 <td class="input_info_text">计划事务:</td>
@@ -15,10 +15,16 @@
             </tr>
             <tr>
                 <td class="input_info_text">周期规则:</td>
-                <td><span class="task_cycle" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="0" checked="checked">一次</span>
-                    <span class="task_cycle" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="1">每天</span>
-                    <span class="task_cycle disabled" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="2" disabled>每月</span>
-                    <span class="task_cycle disabled" (click)="checkedCycle($event)"><input name="task_cycle" type="radio" onClick="event.cancelBubble = true" value="3" disabled>每年</span></td>
+                <td>
+                    <ng-container *ngFor="let cycle of task_cycles">
+                        <ng-container *ngIf="cycle.is_use==true; else elseTemplate">
+                            <span class="task_cycle" (click)="$event.target.firstChild.click()"><input type="radio" name="task_cycle" [value]="cycle.value" [checked]="task_select_cycles===cycle.value" (click)="$event.cancelBubble = true;task_select_cycles=cycle.value">{{cycle.cycle}}</span>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            <span class="task_cycle disabled" (click)="$event.target.firstChild.click()"><input type="radio" name="task_cycle" [value]="cycle.value" (click)="selectCycle(cycle.value)">{{cycle.cycle}}</span>
+                        </ng-template>
+                    </ng-container>
+                </td>
             </tr>
             <tr>
                 <td colspan="2"> <button class="task_info_btn" (click)="addTask()">提交</button></td>
