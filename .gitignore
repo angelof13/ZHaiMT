@@ -52,3 +52,4 @@ Thumbs.db
 *.retry
 
 # End of https://www.toptal.com/developers/gitignore/api/ansible
+debug.log
