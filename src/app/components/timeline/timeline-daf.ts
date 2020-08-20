@@ -195,7 +195,7 @@ class TimelineDataAndFunction {
         task_canvas.style.top = this.lines_info[0].start.y + "px";
         task_canvas.width = this.area_info_w_ge_h ? (this.lines_info[this.lines_info.length - 1].start.x - this.lines_info[0].start.x) : (this.lines_info[0].end.x - this.lines_info[0].start.x);
         task_canvas.height = this.area_info_w_ge_h ? (this.lines_info[0].end.y - this.lines_info[0].start.y) : (this.lines_info[this.lines_info.length - 1].start.y - this.lines_info[0].start.y);
-
+        let temp_line_length = this.area_info_w_ge_h ? task_canvas.width : task_canvas.height;
         this.task_boxes = [];
         if (this.task_all.length != 0) {
             for (let task_num = 0; task_num < this.task_all.length; task_num++) {
@@ -206,24 +206,24 @@ class TimelineDataAndFunction {
                 if ((this.task_all[task_num].start_time <= this.start_time) && (this.task_all[task_num].end_time > this.start_time && this.task_all[task_num].end_time <= this.end_time)) {
                     temp.task = this.task_all[task_num].task;
                     temp.start = { x: 0, y: 0 };
-                    temp.width = (this.task_all[task_num].end_time - this.start_time) * task_canvas.width / this.t_day;
+                    temp.width = (this.task_all[task_num].end_time - this.start_time) * temp_line_length / this.t_day;
                 } else if ((this.start_time <= this.task_all[task_num].start_time && this.task_all[task_num].start_time <= this.end_time) && (this.start_time < this.task_all[task_num].end_time && this.task_all[task_num].end_time <= this.end_time)) {
                     temp.task = this.task_all[task_num].task;
-                    temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * task_canvas.width / this.t_day, y: 0 };
-                    temp.width = (this.task_all[task_num].end_time - this.task_all[task_num].start_time) * task_canvas.width / this.t_day;
+                    temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * temp_line_length / this.t_day, y: 0 };
+                    temp.width = (this.task_all[task_num].end_time - this.task_all[task_num].start_time) * temp_line_length / this.t_day;
                 } else if ((this.start_time <= this.task_all[task_num].start_time && this.task_all[task_num].start_time <= this.end_time) && (this.end_time < this.task_all[task_num].end_time)) {
                     temp.task = this.task_all[task_num].task;
-                    temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * task_canvas.width / this.t_day, y: 0 };
-                    temp.width = (this.end_time - this.task_all[task_num].start_time) * task_canvas.width / this.t_day;
+                    temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * temp_line_length / this.t_day, y: 0 };
+                    temp.width = (this.end_time - this.task_all[task_num].start_time) * temp_line_length / this.t_day;
                 } else if (this.task_all[task_num].start_time < this.start_time && this.end_time < this.task_all[task_num].end_time) {
                     temp.task = this.task_all[task_num].task;
                     temp.start = { x: 0, y: 0 };
-                    temp.width = task_canvas.width;
+                    temp.width = temp_line_length;
                 }
                 else {
                     continue;
                 }
-                if (this.area_info_w_ge_h) {
+                if (this.area_info_w_ge_h == false) {
                     temp.start.y = temp.start.x;
                     temp.start.x = 0;
                     temp.height = temp.width;
@@ -232,10 +232,15 @@ class TimelineDataAndFunction {
                 this.task_boxes.push(temp);
             }
             let temp_n = this.task_boxes.length < 10 ? 10 : this.task_boxes.length;
-            let temp_length = (task_canvas.height / temp_n) | 0;
+            let temp_length = (this.area_info_w_ge_h == false ? task_canvas.width / temp_n : task_canvas.height / temp_n) | 0;
             for (let task_view = 0; task_view < this.task_boxes.length; task_view++) {
-                this.area_info_w_ge_h ? this.task_boxes[task_view].start.x : this.task_boxes[task_view].start.y = temp_length * task_view;
-                this.area_info_w_ge_h ? this.task_boxes[task_view].width : this.task_boxes[task_view].height = temp_length;
+                if (this.area_info_w_ge_h == false) {
+                    this.task_boxes[task_view].start.x = temp_length * task_view;
+                    this.task_boxes[task_view].width = temp_length;
+                } else {
+                    this.task_boxes[task_view].start.y = temp_length * task_view;
+                    this.task_boxes[task_view].height = temp_length;
+                }
             }
         }
         return task_canvas.getContext("2d");

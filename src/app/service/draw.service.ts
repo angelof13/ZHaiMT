@@ -10,7 +10,13 @@ interface point { x: number, y: number; };
 })
 
 class DrawService {
-    box_color = [];
+    /**
+     * 绘画设置项,以后可单独设置
+     */
+    draw_style: {
+        box_color: [];
+        font_size: 24;
+    };
     constructor() { }
 
     /**
@@ -62,11 +68,10 @@ class DrawService {
             draw_map.beginPath();
             draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
             draw_map.stroke();
-            draw_map.fillStyle = "rgba(100,30,100,1)";
+            draw_map.fillStyle = "rgba(100,30,100,0.8)";
             draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
-            draw_map.fillStyle = "#000000";
-            this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + 15) } }], align_style: "center", font_size: 30, font_type: "Microsoft YaHei" });
-
+            draw_map.fillStyle = "rgba(0,0,0,0.8)";
+            this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "Microsoft YaHei" });
         }
     }
 }

@@ -28,8 +28,9 @@ export class TimelineComponent implements OnInit {
     task_cycles: { cycle: string; value: number; is_use: boolean }[] = [
         { cycle: '一次', value: 0, is_use: true },
         { cycle: '每天', value: 1, is_use: true },
-        { cycle: '每月', value: 2, is_use: false },
-        { cycle: '每年', value: 3, is_use: false },
+        { cycle: '每周', value: 2, is_use: false },
+        { cycle: '每月', value: 3, is_use: false },
+        { cycle: '每年', value: 4, is_use: false },
     ];
     task_select_cycles: number = 0;
 
@@ -47,6 +48,7 @@ export class TimelineComponent implements OnInit {
         this.temp_task_endtime = this.temp_task_starttime;
         this.task_main_right_style.style_display = 0;
         this.task_table_style.style_display = 1;
+        this.task_table_style.style_display = 0;
     }
     /**
      * @description 修改任务信息的界面
@@ -86,18 +88,6 @@ export class TimelineComponent implements OnInit {
             this.temp_task_info.task = "";
         }
         this.update();
-        //let start_time = new Date(this.task_start_time.nativeElement.value).getTime(), end_time = new Date(this.task_end_time.nativeElement.value).getTime();
-        //
-        //console.log(start_time);
-        //console.log(end_time);
-        //if (start_time >= end_time) {
-        //    return false;
-        //} else {
-        //    this.temp_task_info.task = this.input_task.nativeElement.value;
-        //    this.temp_task_info.start_time = start_time;
-        //    this.temp_task_info.end_time = end_time;
-        //}
-        //console.log(this.temp_task_info);
     }
 
     /**
