@@ -13,7 +13,7 @@ class DataTransmissionService {
 
     constructor() { }
 
-    init(table_name: string, table_result: any) {
+    init(table_name: string, table_result: any, flag: any) {
         if (this.db_operate_table != table_name) {
             let _this = this;
             this.db_open_request = window.indexedDB.open("zhaimt_DB", 1);
@@ -24,6 +24,7 @@ class DataTransmissionService {
                 _this.db = event.target.result;
                 _this.db_operate_table = table_name;
                 _this.get_all_value(table_result);
+                flag.update_flag = true;
             }
             this.db_open_request.onupgradeneeded = function (this: IDBRequest, event) {
                 _this.db = event.target.result;

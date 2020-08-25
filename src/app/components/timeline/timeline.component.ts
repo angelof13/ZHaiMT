@@ -37,6 +37,7 @@ export class TimelineComponent implements OnInit {
     task_main_right_style: { style_display: number, style_top: number, style_left: number }
     task_table_style: { style_display: number };
 
+    flag: { update_flag: boolean };
     constructor(private draw: DrawService, private tl_daf: TimelineDataAndFunction, private render: Renderer2, private datepipe: DatePipe) { }
 
     /**
@@ -48,7 +49,6 @@ export class TimelineComponent implements OnInit {
         this.temp_task_endtime = this.temp_task_starttime;
         this.task_main_right_style.style_display = 0;
         this.task_table_style.style_display = 1;
-        this.task_table_style.style_display = 0;
     }
     /**
      * @description 修改任务信息的界面
@@ -88,6 +88,7 @@ export class TimelineComponent implements OnInit {
             this.temp_task_info.task = "";
         }
         this.update();
+        this.task_table_style.style_display = 0;
     }
 
     /**
@@ -140,9 +141,16 @@ export class TimelineComponent implements OnInit {
         this.task_canvas = this.render.selectRootElement("#task_canvas");
     }
     ngOnInit(): void {
+        this.flag = { update_flag: false };
         this.init();
-        this.tl_daf.init();
+        this.tl_daf.init(this.flag);
         this.update();
+        let update_view = setInterval(() => {
+            if (this.flag.update_flag == true) {
+                this.update();
+                clearInterval(update_view);
+            }
+        }, 200);
         fromEvent(window, 'resize').subscribe((event) => {
             //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整
             this.update();

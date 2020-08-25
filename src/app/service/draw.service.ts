@@ -3,6 +3,8 @@ export { DrawService }
 
 /**************************************************************************************数据类型接口************************************************************************************************************/
 interface point { x: number, y: number; };
+
+interface drawstyle { box_color: string[], font_size: number };
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
 
 @Injectable({
@@ -13,10 +15,7 @@ class DrawService {
     /**
      * 绘画设置项,以后可单独设置
      */
-    draw_style: {
-        box_color: [];
-        font_size: 24;
-    };
+    draw_style: drawstyle = { box_color: ["rgba(100,30,100,0.8)", "rgba(100,30,30,0.8)"], font_size: 24 };
     constructor() { }
 
     /**
@@ -68,7 +67,7 @@ class DrawService {
             draw_map.beginPath();
             draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
             draw_map.stroke();
-            draw_map.fillStyle = "rgba(100,30,100,0.8)";
+            draw_map.fillStyle = this.draw_style.box_color[i % this.draw_style.box_color.length];
             draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
             draw_map.fillStyle = "rgba(0,0,0,0.8)";
             this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "Microsoft YaHei" });

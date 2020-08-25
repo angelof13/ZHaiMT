@@ -120,8 +120,8 @@ class TimelineDataAndFunction {
         return this.task_boxes;
     }
 
-    init() {
-        this.op_db.init("task_table", this.task_all);
+    init(flag: any) {
+        this.op_db.init("task_table", this.task_all, flag);
     }
     /**
      * @description 自适应修改背景坐标
