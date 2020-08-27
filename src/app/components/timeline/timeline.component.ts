@@ -22,7 +22,6 @@ export class TimelineComponent implements OnInit {
     @ViewChild('task_start_time') task_start_time: ElementRef;
     @ViewChild('task_end_time') task_end_time: ElementRef;
     @ViewChild('input_task') input_task: ElementRef;
-    temp_task_info: task_info;
     temp_task_starttime: string;
     temp_task_endtime: string;
     task_cycles: { cycle: string; value: number; is_use: boolean }[] = [
@@ -48,6 +47,7 @@ export class TimelineComponent implements OnInit {
         this.temp_task_starttime = this.datepipe.transform(temp, "yyyy-MM-ddTHH:mm:ss");
         this.temp_task_endtime = this.temp_task_starttime;
         this.task_main_right_style.style_display = 0;
+        this.input_task.nativeElement.value = "";
         this.task_table_style.style_display = 1;
     }
     /**
@@ -78,16 +78,12 @@ export class TimelineComponent implements OnInit {
      * @description 添加任务
      */
     addTask() {
-        this.temp_task_info.start_time = new Date(this.temp_task_starttime).getTime();
-        this.temp_task_info.end_time = new Date(this.temp_task_endtime).getTime();
-        this.temp_task_info.cycle = this.task_select_cycles;
-        this.temp_task_info.task = this.input_task.nativeElement.value;
-        if (this.temp_task_info.task != "") {
-            this.tl_daf.addTask(this.temp_task_info);
-            console.log(this.temp_task_info);
-            this.temp_task_info.task = "";
+
+        let temp_task_info: task_info = { start_time: new Date(this.temp_task_starttime).getTime(), end_time: new Date(this.temp_task_endtime).getTime(), cycle: this.task_select_cycles, task: this.input_task.nativeElement.value, is_end: false };
+        if (temp_task_info.task != "") {
+            this.tl_daf.addTask(temp_task_info);
+            this.update();
         }
-        this.update();
         this.task_table_style.style_display = 0;
     }
 
@@ -136,7 +132,6 @@ export class TimelineComponent implements OnInit {
     private init() {
         this.task_main_right_style = { style_display: 0, style_top: 0, style_left: 0 };
         this.task_table_style = { style_display: 0 };
-        this.temp_task_info = { task: "", start_time: 0, end_time: 0, cycle: 0, is_end: false };
         this.timeline_canvas = this.render.selectRootElement("#timeline_canvas");
         this.task_canvas = this.render.selectRootElement("#task_canvas");
     }
