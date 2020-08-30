@@ -23,7 +23,7 @@ class DataTransmissionService {
             this.db_open_request.onsuccess = function (event) {
                 _this.db = event.target.result;
                 _this.db_operate_table = table_name;
-                _this.get_all_value(table_result);
+                _this.getAllValue(table_result);
                 flag.update_flag = true;
             }
             this.db_open_request.onupgradeneeded = function (this: IDBRequest, event) {
@@ -36,15 +36,15 @@ class DataTransmissionService {
             }
         }
     }
-    set_value(value: any) {
+    setValue(value: any) {
         this.db_objectstore = this.db.transaction([this.db_operate_table], 'readwrite').objectStore(this.db_operate_table);
         this.db_objectstore.add({ value });
     }
-    update_value(value: any) {
+    updateValue(value: any) {
         this.db_objectstore = this.db.transaction([this.db_operate_table], 'readwrite').objectStore(this.db_operate_table);
         this.db_objectstore.put({ value });
     }
-    get_all_value(ret: any) {
+    getAllValue(ret: any) {
         this.db_objectstore = this.db.transaction([this.db_operate_table], 'readwrite').objectStore(this.db_operate_table);
         let DB_result = this.db_objectstore.getAll();
 
@@ -55,7 +55,7 @@ class DataTransmissionService {
         }
     }
 
-    remove_value(value: any) {
+    removeValue(value: any) {
         this.db_objectstore = this.db.transaction([this.db_operate_table], 'readwrite').objectStore(this.db_operate_table);
         let DB_result = this.db_objectstore.delete(value);
     }

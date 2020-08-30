@@ -1,4 +1,4 @@
-import { Directive, Injectable, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { DataTransmissionService } from "../../service/data-transmission.service"
 
 export { TimelineDataAndFunction, current_mode, boxes_info, task_info }
@@ -26,8 +26,9 @@ interface texts_style { text: { content: string; draw: point; }[], align_style: 
  * @param start 设置开始位置
  * @param width 设置任务盒子的宽
  * @param height 设置任务盒子的高
+ * @param task_map 和task_info的映射
  */
-interface boxes_info { task: string, start: point, width: number, height: number };
+interface boxes_info { task: string, start: point, width: number, height: number, task_map: number };
 
 interface task_info { id?: number, task: string, start_time: number, end_time: number, cycle: number, is_end: boolean }
 /**************************************************************************************数据类型接口结束************************************************************************************************************/
@@ -85,9 +86,20 @@ class TimelineDataAndFunction {
      */
     private task_all: task_info[] = [];
 
+    /**
+     * @description 保存所有要绘制的任务
+     */
     private task_boxes: boxes_info[] = [];
 
-    constructor(private op_db: DataTransmissionService, private render: Renderer2) { }
+    constructor(private op_db: DataTransmissionService) { }
+
+    /**
+     * @description 初始化,获取数据
+     */
+    init(flag: any) {
+        this.op_db.init("task_table", this.task_all, flag);
+    }
+
     /**
      * @param end_number 初始化后数组中成员个数
      */
@@ -106,23 +118,90 @@ class TimelineDataAndFunction {
             this.time_info_date.text.push({ content: "", draw: { x: 0, y: 0 } });
         }
     }
+
+    /**
+     * @description 获取背景画线信息
+     */
     getLinesInfo(): line_info[] {
-        if (this.lines_info.length != 0) {
-            return this.lines_info;
-        } else {
-            return [];
-        }
+        return this.lines_info;
     }
+    /**
+     * @description 获取背景画线对应的时间信息
+     */
     getTimeTextInfo(): texts_style {
         return this.time_info_date;
     }
+    /**
+     * @description 获取绘制任务的方盒信息
+     */
     getViewTaskBox(): boxes_info[] {
         return this.task_boxes;
     }
 
-    init(flag: any) {
-        this.op_db.init("task_table", this.task_all, flag);
+    /**
+    * @description 得到时间表数组
+    * @param flag 距离开始的第几个时间点
+    * @param draw_poing 绘制的点
+    */
+    setTimeText(flag: number, draw_poing: point, type: current_mode) {
+        if (type == current_mode.day) {
+            let temp = new Date(this.start_time + flag * this.time_interval);
+            let temp_h = temp.getHours(), temp_m = temp.getMinutes();
+            this.time_info_date.text[flag].content = ((temp_h <= 9 ? "0" : "") + temp_h) + ":" + ((temp_m <= 9 ? "0" : "") + temp_m);
+            this.time_info_date.text[flag].draw = draw_poing;
+        } else if (type == current_mode.month) {
+            /**
+             * @TODO 设置月份信息
+             */
+        }
+        return;
     }
+
+    /**
+     * @description 判读鼠标右键是否在task上
+     * @param cursor_point 光标右键的位置
+     * @returns -1:未在task上,其他:所在的task_box映射的task_all中的数值
+     */
+    inBoxesInfo(cursor_point: { x: number, y: number }): number {
+        for (let i = 0; i < this.task_boxes.length; i++) {
+            if ((this.task_boxes[i].start.x <= cursor_point.x) && (cursor_point.x <= this.task_boxes[i].start.x + this.task_boxes[i].width + this.lines_info[0].start.x) &&
+                (this.task_boxes[i].start.y <= cursor_point.y) && (cursor_point.y <= this.task_boxes[i].start.y + this.task_boxes[i].height + this.lines_info[0].start.y)) {
+                return this.task_boxes[i].task_map;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * @description 获取相应脚标的任务信息
+     */
+    getTask(operator: number): task_info {
+        return this.task_all[operator];
+    }
+    /**
+     * @description 添加任务
+     */
+    addTask(task: task_info) {
+        this.op_db.setValue(task);
+        this.task_all.push(task);
+    }
+    /**
+     * @description 更新相应脚标的任务信息
+     */
+    updateTask(operator: number) {
+        this.op_db.updateValue(this.task_all[operator]);
+    }
+    /**
+     * @description 更新相应脚标的任务信息
+     */
+    deleteTask(operator: number) {
+        this.op_db.removeValue(this.task_all[operator].id);
+        if (operator > -1) {
+            this.task_all.splice(operator, 1);
+        }
+    }
+
+
     /**
      * @description 自适应修改背景坐标
      * @param timeline_canvas:绘制的canvas画板
@@ -165,31 +244,11 @@ class TimelineDataAndFunction {
         }
         return timeline_canvas.getContext('2d');
     }
-
-    /**
-    * @description 得到时间表数组
-    * @param flag 距离开始的第几个时间点
-    * @param draw_poing 绘制的点
-    */
-    setTimeText(flag: number, draw_poing: point, type: current_mode) {
-        if (type == current_mode.day) {
-            let temp = new Date(this.start_time + flag * this.time_interval);
-            let temp_h = temp.getHours(), temp_m = temp.getMinutes();
-            this.time_info_date.text[flag].content = ((temp_h <= 9 ? "0" : "") + temp_h) + ":" + ((temp_m <= 9 ? "0" : "") + temp_m);
-            this.time_info_date.text[flag].draw = draw_poing;
-        } else if (type == current_mode.month) {
-            /**
-             * @TODO 设置月份信息
-             */
-        }
-        return;
-    }
-
     /**
     * @description 获取并修改任务图案
     * @param task_canvas:绘制canvas画板
     */
-    taskSelfAdaption(task_canvas: HTMLCanvasElement, type: current_mode): CanvasRenderingContext2D {
+    taskSelfAdaption(task_canvas: HTMLCanvasElement): CanvasRenderingContext2D {
         /**更新绘制区域大小 */
         task_canvas.style.left = this.lines_info[0].start.x + "px";
         task_canvas.style.top = this.lines_info[0].start.y + "px";
@@ -199,9 +258,13 @@ class TimelineDataAndFunction {
         this.task_boxes = [];
         if (this.task_all.length != 0) {
             for (let task_num = 0; task_num < this.task_all.length; task_num++) {
-                let temp: boxes_info = { task: "", width: 0, height: 0, start: { x: 0, y: 0 } };
+                let temp: boxes_info = { task: "", width: 0, height: 0, start: { x: 0, y: 0 }, task_map: task_num };
                 if (this.task_all[task_num].cycle == 1) {
-
+                    let now_day = new Date(new Date().toDateString()).getTime();
+                    let start_time = now_day + new Date(this.task_all[task_num].start_time).getHours() * this.t_hour + new Date(this.task_all[task_num].start_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].start_time).getSeconds() * 1000;
+                    let end_time = now_day + new Date(this.task_all[task_num].end_time).getHours() * this.t_hour + new Date(this.task_all[task_num].end_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].end_time).getSeconds() * 1000;
+                    this.task_all[task_num].start_time = start_time;
+                    this.task_all[task_num].end_time = end_time;
                 }
                 if ((this.task_all[task_num].start_time <= this.start_time) && (this.task_all[task_num].end_time > this.start_time && this.task_all[task_num].end_time <= this.end_time)) {
                     temp.task = this.task_all[task_num].task;
@@ -244,11 +307,6 @@ class TimelineDataAndFunction {
             }
         }
         return task_canvas.getContext("2d");
-    }
-
-    addTask(task: task_info) {
-        this.op_db.set_value(task);
-        this.task_all.push(task);
     }
 }
 

@@ -1,5 +1,5 @@
 <div id="background" oncontextmenu="return false">
-    <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (contextmenu)="task_table_hide()">
+    <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (contextmenu)="taskTableHide()">
         <table id="task_info" onClick="event.cancelBubble = true">
             <tr>
                 <td class="input_info_text">开始时间:</td>
@@ -27,13 +27,19 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"> <button class="task_info_btn" (click)="addTask()">提交</button></td>
+                <ng-container *ngIf="operator == 0; else elseTemplate">
+                    <td colspan="2"> <button class="task_info_btn" (click)="addTask()">添加</button></td>
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <td colspan="2"> <button class="task_info_btn" (click)="updateTask()">更新</button></td>
+                </ng-template>
+
             </tr>
         </table>
     </div>
     <div id="time_table">
-        <canvas id="task_canvas" width="300" height="400" (click)="main_right_hide()" (contextmenu)="main_right_view($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-        <canvas id="timeline_canvas" width="300" height="400" (click)="main_right_hide()" (contextmenu)="main_right_view($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="task_canvas" width="300" height="400" (click)="taskRightHide()" (contextmenu)="taskRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="timeline_canvas" width="300" height="400" (click)="mainRightHide()" (contextmenu)="mainRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
     </div>
     <div id="main_right" class="right_menu" [ngStyle]="{'display':task_main_right_style.style_display?'block':'none',  'top':task_main_right_style.style_top+'px',  'left':task_main_right_style.style_left+'px'}">
         <ul>
@@ -41,10 +47,10 @@
             <li (click)="timelineSetView($event)">设置</li>
         </ul>
     </div>
-    <div id="task_right" class="right_menu">
+    <div id="task_right" class="right_menu" [ngStyle]="{'display':task_right_style.style_display?'block':'none',  'top':task_right_style.style_top+'px',  'left':task_right_style.style_left+'px'}">
         <ul>
-            <li (click)="changeTaskView($event)">修改</li>
-            <li (click)="deleteTaskView($event)">删除</li>
+            <li (click)="changeTaskView()">修改</li>
+            <li (click)="deleteTask()">删除</li>
         </ul>
     </div>
 </div>
