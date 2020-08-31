@@ -5,6 +5,7 @@ import { TimelineDataAndFunction, current_mode, task_info } from './timeline-daf
 
 import { DrawService } from '../../service/draw.service';
 import { DatePipe } from '@angular/common';
+import { ConstantPool } from '@angular/compiler';
 
 
 @Component({
@@ -76,6 +77,7 @@ export class TimelineComponent implements OnInit {
     changeTaskView() {
         let temp_task = this.tl_daf.getTask(this.operator_task);
 
+        console.log(temp_task);
         this.task_right_style.style_display = 0;
         this.temp_task_starttime = this.datepipe.transform(temp_task.start_time, "yyyy-MM-ddTHH:mm:ss");
         this.temp_task_endtime = this.datepipe.transform(temp_task.end_time, "yyyy-MM-ddTHH:mm:ss");

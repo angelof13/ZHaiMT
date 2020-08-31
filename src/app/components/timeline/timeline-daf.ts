@@ -261,8 +261,14 @@ class TimelineDataAndFunction {
                 let temp: boxes_info = { task: "", width: 0, height: 0, start: { x: 0, y: 0 }, task_map: task_num };
                 if (this.task_all[task_num].cycle == 1) {
                     let now_day = new Date(new Date().toDateString()).getTime();
-                    let start_time = now_day + new Date(this.task_all[task_num].start_time).getHours() * this.t_hour + new Date(this.task_all[task_num].start_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].start_time).getSeconds() * 1000;
-                    let end_time = now_day + new Date(this.task_all[task_num].end_time).getHours() * this.t_hour + new Date(this.task_all[task_num].end_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].end_time).getSeconds() * 1000;
+                    let start_time: number = 0, end_time: number = 0;
+                    if ((this.task_all[task_num].end_time - this.task_all[task_num].start_time) < this.t_day) {
+                        start_time = now_day + new Date(this.task_all[task_num].start_time).getHours() * this.t_hour + new Date(this.task_all[task_num].start_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].start_time).getSeconds() * 1000;
+                        end_time = now_day + new Date(this.task_all[task_num].end_time).getHours() * this.t_hour + new Date(this.task_all[task_num].end_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].end_time).getSeconds() * 1000;
+                    } else {
+                        start_time = this.start_time;
+                        end_time = this.end_time;
+                    }
                     this.task_all[task_num].start_time = start_time;
                     this.task_all[task_num].end_time = end_time;
                 }
