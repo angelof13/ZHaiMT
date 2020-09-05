@@ -57,9 +57,11 @@ export class ShadeService {
    * 
    * @param canvas 画布的dom元素
    * @param eject_direction 弹出方向值 top left right bottom
+   * @param startTime 开始时间的时间戳
+   * @param endendTime 结束时间的时间戳
    * @description 根据当前时间增加百分比黑白滤镜
    */
-  current_time_shade_canvas(canvas : HTMLCanvasElement, eject_direction: string){
+  current_time_shade_canvas(canvas : HTMLCanvasElement, eject_direction: string,startTime:number,endTime: number){
 
     let that = this;
     
@@ -67,13 +69,17 @@ export class ShadeService {
     let height = canvas.parentElement.offsetHeight;
     
     let date = new Date();
-    let milliseconds = (date.getTime()+28800000)%86400000;
-    let percentage = milliseconds/86400000+0.002
-    
+    // 获取当前时间
+    let milliseconds = date.getTime();
+    let percentage = (milliseconds-startTime)/(endTime-startTime);
+    console.log("百分比")
+    console.log(milliseconds)
+    console.log(startTime)
+    console.log(percentage)
     // 宽度增加1px的时间
-    let width_time =  86400000/(width*0.996);
+    let width_time =  (endTime-startTime)/(width);
     // 高度增加1px的时间
-    let height_time = 86400000/(width*0.996);
+    let height_time = (endTime-startTime)/(height);
     if(this.fast_shade){
       this.fast_shade.unsubscribe();
     }
