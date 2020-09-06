@@ -1,8 +1,8 @@
 <div id="main" oncontextmenu="return false">
-    <ng-container *ngIf="w_ge_h == true; else elseTemplate">
+    <ng-container *ngIf="w_ge_h == true; else h_ge_w">
         <img id="background" src="../../../assets/img/wgeh.jpg">
     </ng-container>
-    <ng-template #elseTemplate>
+    <ng-template #h_ge_w>
         <img id="background" src="../../../assets/img/hgew.jpg">
     </ng-template>
 
@@ -62,10 +62,10 @@
                 </td>
             </tr>
             <tr>
-                <ng-container *ngIf="operator == 0; else elseTemplate">
+                <ng-container *ngIf="operator == 0; else add_or_update">
                     <td colspan="2"> <button class="task_info_btn" (click)="addTask()">添加</button></td>
                 </ng-container>
-                <ng-template #elseTemplate>
+                <ng-template #add_or_update>
                     <td colspan="2"> <button class="task_info_btn" (click)="updateTask()">更新</button></td>
                 </ng-template>
 
