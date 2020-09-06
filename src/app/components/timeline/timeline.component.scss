@@ -18,10 +18,6 @@
   padding: 0px;
   width: 100%;
   height: 100%;
-  font-family:'KaiTi';
-  //不屏蔽滚动条，在改变页面高度时，会判定为需要滚动条，改变了宽度，使画的线出现“来回跳跃”现象
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 /**background**/
 #background {

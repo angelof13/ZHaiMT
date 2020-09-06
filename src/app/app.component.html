@@ -1,4 +1,7 @@
-<app-timeline></app-timeline>
-
-
+<div id="routing">
+    <app-timeline></app-timeline>
+    <div id='ICP' (click)="ICP_Transform()" #ICP>
+        <app-icp></app-icp>
+    </div>
+</div>
 <router-outlet></router-outlet>

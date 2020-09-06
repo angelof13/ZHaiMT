@@ -1,0 +1,23 @@
+#routing{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-family:'KaiTi';
+    //不屏蔽滚动条，在改变页面高度时，会判定为需要滚动条，改变了宽度，使画的线出现“来回跳跃”现象
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#ICP{
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    width: 208px;
+    height: 21px;
+    right: 0px;
+    bottom: 20px;
+    transform: translateX(175px);
+    transition:all 1s;
+}

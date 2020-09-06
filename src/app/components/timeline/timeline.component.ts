@@ -240,10 +240,11 @@ export class TimelineComponent implements OnInit {
         let u_i = 0;
         let update_view = setInterval(() => { //设置定时器，没200毫秒检查数据是否读取完毕，若完毕则更新视图并清除该定时器
             if (this.flag.update_flag == true) {
-                this.update();
-                clearInterval(update_view);
+                if (u_i++ > 2) {
+                    this.update();
+                    clearInterval(update_view);
+                }
             }
-            console.log(u_i++);
         }, 200);
         fromEvent(window, 'resize').subscribe((event) => {
             //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整

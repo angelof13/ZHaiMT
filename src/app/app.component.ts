@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'reZHaiMT';
+  @ViewChild('ICP') ICP: any;
+  location = '0';
+
+  title = '13号的世界树';
+
+  ICP_Transform() {
+    this.ICP.nativeElement.style.transform = 'translateX(' + this.location + 'px)';
+    this.location = this.location == '0' ? "175" : '0';
+  }
 }
