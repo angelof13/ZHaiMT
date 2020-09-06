@@ -1,28 +1,24 @@
-# ReZHaiMT
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-#Test
+|   目标  | 图像流TODOList |  实现版本  |
+| :-----: |:----: | :----:  |
+| 界面自适应 | √ | 0.1 |
+| 当前时间滚动 | √ | 0.1 |
+| 可修改界面样式 - 背景界面 | | |
+| 可修改界面样式 - 任务显示 | | |
+| 以天为单位的视图 | √ | 0.1 |
+| 以周为单位的视图 |  |  |
+| 以月为单位的视图 |  |  |
+| 以年为单位的视图 |  |  |
+| 可设置周期为一次的任务 | √ | 0.1 |
+| 可设置周期为每天的任务 | √ | 0.1 |
+| 可设置周期为每周的任务 |  |  |
+| 可设置周期为每月的任务 |  |  |
+| 可设置周期为每年的任务 |  |  |
+| 可修改可见任务 | √ | 0.1 |
+| 可修改任意任务 |  |  |
+| 可直接拖动可见任务完成修改 |  |  |
+| 可直接拖动可见任务边框完成修改 |  |  |
+| 删除可见任务 | √ | 0.1 |
+| 删除任意任务 |  |  |
+| 可作为桌面壁纸(借助wallpaper engine等程序) |  |  |
+| | | |
+初版已完成，完成，https://www.zhaimt.com/
