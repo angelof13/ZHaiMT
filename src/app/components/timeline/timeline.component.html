@@ -1,4 +1,16 @@
-<div id="background" oncontextmenu="return false">
+<div id="main" oncontextmenu="return false">
+    <ng-container *ngIf="w_ge_h == true; else elseTemplate">
+        <img id="background" src="../../../assets/img/wgeh.jpg">
+    </ng-container>
+    <ng-template #elseTemplate>
+        <img id="background" src="../../../assets/img/hgew.jpg">
+    </ng-template>
+
+    <div id="background_shade"></div>
+    <div id="time_table">
+        <canvas id="timeline_canvas" width="300" height="400" (click)="mainRightHide()" (contextmenu)="mainRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="task_canvas" width="300" height="400" (click)="taskRightHide()" (contextmenu)="taskRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+    </div>
     <div id="timeline_setting" [ngStyle]="{display: timeline_setting.style_display?'block':'none'}" (contextmenu)="timelineSettingTableHide()">
         <table id="timeline_setting_info" onClick="event.cancelBubble = true">
             <tr>
@@ -71,9 +83,5 @@
             <li (click)="changeTaskView()">修改</li>
             <li (click)="deleteTask()">删除</li>
         </ul>
-    </div>
-    <div id="time_table">
-        <canvas id="task_canvas" width="300" height="400" (click)="taskRightHide()" (contextmenu)="taskRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-        <canvas id="timeline_canvas" width="300" height="400" (click)="mainRightHide()" (contextmenu)="mainRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
     </div>
 </div>

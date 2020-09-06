@@ -43,6 +43,7 @@ export class TimelineComponent implements OnInit {
     //当前进行的操作  0：添加任务  1：更新任务
     operator: number = 0;
 
+    w_ge_h: boolean;
     /**
      * 隐藏div显示信息
      */
@@ -216,6 +217,8 @@ export class TimelineComponent implements OnInit {
 
         this.task_drawmap = this.tl_daf.taskSelfAdaption(this.task_canvas);
         this.draw.drawBox(this.task_drawmap, this.tl_daf.getViewTaskBox());
+
+        this.w_ge_h = this.timeline_canvas.offsetWidth >= this.timeline_canvas.height;
     }
 
     /**
@@ -234,11 +237,13 @@ export class TimelineComponent implements OnInit {
         this.init();
         this.tl_daf.init(this.flag);
         this.update();
+        let u_i = 0;
         let update_view = setInterval(() => { //设置定时器，没200毫秒检查数据是否读取完毕，若完毕则更新视图并清除该定时器
             if (this.flag.update_flag == true) {
                 this.update();
                 clearInterval(update_view);
             }
+            console.log(u_i++);
         }, 200);
         fromEvent(window, 'resize').subscribe((event) => {
             //这里表示当窗口大小发生变化时所做的事，也就是说可以对多个图表进行大小调整

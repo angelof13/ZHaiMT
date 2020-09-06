@@ -15,7 +15,7 @@ class DrawService {
     /**
      * 绘画设置项,以后可单独设置
      */
-    draw_style: drawstyle = { box_color: ["rgba(100,30,100,0.8)", "rgba(100,30,30,0.8)"], font_size: 24 };
+    draw_style: drawstyle = { box_color: ["rgba(100,30,100,0.8)", "rgba(102,253,204,0.7)", "rgba(204,153,153,0.8)", "rgba(255,153,0,0.8)", "rgba(100,30,30,0.8)", "rgba(204,255,153,0.8)"], font_size: 24 };
     constructor() { }
 
     /**
@@ -24,7 +24,7 @@ class DrawService {
      * @param {[[{ start: point; end: point; }]]} lines_info 需要绘制的线的信息
      */
     drawLine(draw_map: CanvasRenderingContext2D, lines_info: { start: point; end: point; }[][]) {
-        draw_map.strokeStyle = "#000";
+        draw_map.strokeStyle = "#333";
         for (let i = 0; i < lines_info.length; i++) {
             draw_map.beginPath();
             for (let j = 0; j < lines_info[i].length; j++) {
@@ -70,7 +70,7 @@ class DrawService {
             draw_map.fillStyle = this.draw_style.box_color[i % this.draw_style.box_color.length];
             draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
             draw_map.fillStyle = "rgba(0,0,0,0.8)";
-            this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "Microsoft YaHei" });
+            this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "KaiTi" });
         }
     }
 }

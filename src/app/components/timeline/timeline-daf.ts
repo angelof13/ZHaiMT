@@ -1,5 +1,6 @@
-import { Directive, Injectable, ViewChild, ElementRef } from '@angular/core';
-import { DataTransmissionService } from "../../service/data-transmission.service"
+import { Directive, Injectable } from '@angular/core';
+import { DataTransmissionService } from "../../service/data-transmission.service";
+import { ShadeService } from '../../service/shade.service';
 
 export { TimelineDataAndFunction, current_mode, boxes_info, task_info }
 
@@ -56,13 +57,12 @@ class TimelineDataAndFunction {
     /**
     * @description 一天的时间间隔数组
     */
-    private time_info_date: texts_style = { text: [], align_style: "center", font_size: 15, font_type: "cascadia code PL" };
+    private time_info_date: texts_style = { text: [], align_style: "center", font_size: 15, font_type: "CascadiaCodePL" };
     /**
     * @description 画线和边缘的间距
     */
     private space = 0.02;
 
-    @ViewChild("main_right") task_main_right: ElementRef;
     /**
      * @description 常用时间计数,单位ms,减少计算
      */
@@ -91,7 +91,7 @@ class TimelineDataAndFunction {
      */
     private task_boxes: boxes_info[] = [];
 
-    constructor(private op_db: DataTransmissionService) { }
+    constructor(private op_db: DataTransmissionService, private shade: ShadeService) { }
 
     /**
      * @description 初始化,获取数据
@@ -312,6 +312,8 @@ class TimelineDataAndFunction {
                 }
             }
         }
+        this.shade.current_time_shade_canvas(task_canvas, this.area_info_w_ge_h ? "left" : "top", this.start_time, this.end_time);
+
         return task_canvas.getContext("2d");
     }
 }
