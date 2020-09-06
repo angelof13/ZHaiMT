@@ -5,7 +5,6 @@ import { TimelineDataAndFunction, current_mode, task_info } from './timeline-daf
 
 import { DrawService } from '../../service/draw.service';
 import { DatePipe } from '@angular/common';
-import { ConstantPool } from '@angular/compiler';
 
 
 @Component({
@@ -47,6 +46,7 @@ export class TimelineComponent implements OnInit {
     /**
      * 隐藏div显示信息
      */
+    timeline_setting: { style_display: number };
     task_main_right_style: { style_display: number, style_top: number, style_left: number };
     task_right_style: { style_display: number, style_top: number, style_left: number };
     task_table_style: { style_display: number };
@@ -100,7 +100,6 @@ export class TimelineComponent implements OnInit {
     selectCycle(radio) {
         this.task_select_cycles = radio;
     }
-
     onDateChange(temp: number, value: string) {
         if (0 == temp) {
             this.temp_task_starttime = value;
@@ -143,7 +142,12 @@ export class TimelineComponent implements OnInit {
         }
         this.task_table_style.style_display = 0;
     }
-
+    /**
+     * @description 隐藏主页设置表格
+     */
+    timelineSettingTableHide() {
+        this.timeline_setting.style_display = 0;
+    }
     /**
      * @description 隐藏任务表格
      */
@@ -197,6 +201,7 @@ export class TimelineComponent implements OnInit {
      * @description timeline界面信息的设置界面
      */
     timelineSetView(e) {
+        this.timeline_setting.style_display = 1;
         this.task_main_right_style.style_display = 0;
     }
     /**
@@ -217,6 +222,7 @@ export class TimelineComponent implements OnInit {
      * @description 初始化，初始化相应数值，并关联相应canvas
      */
     private init() {
+        this.timeline_setting = { style_display: 0 };
         this.task_main_right_style = { style_display: 0, style_top: 0, style_left: 0 };
         this.task_right_style = { style_display: 0, style_top: 0, style_left: 0 };
         this.task_table_style = { style_display: 0 };

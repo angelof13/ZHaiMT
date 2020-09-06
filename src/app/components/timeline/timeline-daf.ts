@@ -164,8 +164,8 @@ class TimelineDataAndFunction {
      */
     inBoxesInfo(cursor_point: { x: number, y: number }): number {
         for (let i = 0; i < this.task_boxes.length; i++) {
-            if ((this.task_boxes[i].start.x <= cursor_point.x) && (cursor_point.x <= this.task_boxes[i].start.x + this.task_boxes[i].width + this.lines_info[0].start.x) &&
-                (this.task_boxes[i].start.y <= cursor_point.y) && (cursor_point.y <= this.task_boxes[i].start.y + this.task_boxes[i].height + this.lines_info[0].start.y)) {
+            if ((this.task_boxes[i].start.x + this.lines_info[0].start.x <= cursor_point.x) && (cursor_point.x <= this.task_boxes[i].start.x + this.task_boxes[i].width + this.lines_info[0].start.x) &&
+                (this.task_boxes[i].start.y + this.lines_info[0].start.y <= cursor_point.y) && (cursor_point.y <= this.task_boxes[i].start.y + this.task_boxes[i].height + this.lines_info[0].start.y)) {
                 return this.task_boxes[i].task_map;
             }
         }

@@ -1,13 +1,36 @@
 <div id="background" oncontextmenu="return false">
+    <div id="timeline_setting" [ngStyle]="{display: timeline_setting.style_display?'block':'none'}" (contextmenu)="timelineSettingTableHide()">
+        <table id="timeline_setting_info" onClick="event.cancelBubble = true">
+            <tr>
+                <td class="input_info_text">背景图片:</td>
+                <td><input class="input_info" type="file" /></td>
+            </tr>
+            <tr>
+                <td class="input_info_text">开始时间:</td>
+                <td><input class="input_info" /></td>
+            </tr>
+            <tr>
+                <td class="input_info_text">间隔划分:</td>
+                <td><input class="input_info"></td>
+            </tr>
+            <tr>
+                <td class="input_info_text">文字大小:</td>
+                <td><input class="input_info"></td>
+            </tr>
+            <tr>
+                <td colspan="2"> <button class="task_info_btn">确定</button></td>
+            </tr>
+        </table>
+    </div>
     <div id="task" [ngStyle]="{display: task_table_style.style_display?'block':'none'}" (contextmenu)="taskTableHide()">
         <table id="task_info" onClick="event.cancelBubble = true">
             <tr>
                 <td class="input_info_text">开始时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_starttime}}" (change)="onDateChange(0,$event.target.value)" #task_start_time /></td>
+                <td><input class="input_info" type="datetime-local" value="{{temp_task_starttime}}" (change)="onDateChange(0,$event.target.value)" #task_start_time /></td>
             </tr>
             <tr>
                 <td class="input_info_text">结束时间:</td>
-                <td><input id="" class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" (change)="onDateChange(1,$event.target.value)" #task_end_time /></td>
+                <td><input class="input_info" type="datetime-local" value="{{temp_task_endtime}}" min="{{temp_task_endtime}}" (change)="onDateChange(1,$event.target.value)" #task_end_time /></td>
             </tr>
             <tr>
                 <td class="input_info_text">计划事务:</td>
@@ -37,10 +60,6 @@
             </tr>
         </table>
     </div>
-    <div id="time_table">
-        <canvas id="task_canvas" width="300" height="400" (click)="taskRightHide()" (contextmenu)="taskRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-        <canvas id="timeline_canvas" width="300" height="400" (click)="mainRightHide()" (contextmenu)="mainRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
-    </div>
     <div id="main_right" class="right_menu" [ngStyle]="{'display':task_main_right_style.style_display?'block':'none',  'top':task_main_right_style.style_top+'px',  'left':task_main_right_style.style_left+'px'}">
         <ul>
             <li (click)="addTaskView($event)">增加任务</li>
@@ -52,5 +71,9 @@
             <li (click)="changeTaskView()">修改</li>
             <li (click)="deleteTask()">删除</li>
         </ul>
+    </div>
+    <div id="time_table">
+        <canvas id="task_canvas" width="300" height="400" (click)="taskRightHide()" (contextmenu)="taskRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
+        <canvas id="timeline_canvas" width="300" height="400" (click)="mainRightHide()" (contextmenu)="mainRightView($event)">很抱歉，您的浏览器不支持Canvas，无法展示内容</canvas>
     </div>
 </div>
