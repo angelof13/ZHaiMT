@@ -59,7 +59,7 @@ export class ShadeComponent implements OnInit {
     let imageData = ctx.getImageData(0,0,width,height);
     shade_ctx.putImageData(imageData,0,0);
     
-    this.shade_service.current_time_shade_canvas(shade_canvas,eject_direction)
+    this.shade_service.current_time_shade_canvas(shade_canvas,eject_direction,1599235200000,1599321600000)
   }
 
   /**
