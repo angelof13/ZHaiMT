@@ -182,8 +182,9 @@ class TimelineDataAndFunction {
      * @description 添加任务
      */
     addTask(task: task_info) {
-        this.op_db.setValue(task);
+        task.id = this.task_all[this.task_all.length - 1].id + 1;
         this.task_all.push(task);
+        this.op_db.setValue(task);
     }
     /**
      * @description 更新相应脚标的任务信息
@@ -263,7 +264,9 @@ class TimelineDataAndFunction {
                     let now_day = new Date(new Date().toDateString()).getTime();
                     let start_time: number = 0, end_time: number = 0;
                     let temp = this.task_all[task_num].end_time - this.task_all[task_num].start_time;
-
+                    if (temp < 0) {
+                        continue;
+                    }
                     start_time = now_day + new Date(this.task_all[task_num].start_time).getHours() * this.t_hour + new Date(this.task_all[task_num].start_time).getMinutes() * this.t_min + new Date(this.task_all[task_num].start_time).getSeconds() * 1000;
                     end_time = start_time + temp;
 
