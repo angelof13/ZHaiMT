@@ -182,7 +182,11 @@ class TimelineDataAndFunction {
      * @description 添加任务
      */
     addTask(task: task_info) {
-        task.id = this.task_all[this.task_all.length - 1].id + 1;
+        if (this.task_all.length == 0) {
+            task.id = 0;
+        } else {
+            task.id = this.task_all[this.task_all.length - 1].id + 1;
+        }
         this.task_all.push(task);
         this.op_db.setValue(task);
     }
@@ -201,7 +205,6 @@ class TimelineDataAndFunction {
             this.task_all.splice(operator, 1);
         }
     }
-
 
     /**
      * @description 自适应修改背景坐标
