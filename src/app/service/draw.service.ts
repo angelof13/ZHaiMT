@@ -62,15 +62,25 @@ class DrawService {
     * @param boxes_info 需要绘制的框的信息
     */
     drawBox(draw_map: CanvasRenderingContext2D, boxes_info: { task: string, start: point, width: number, height: number }[]) {
-        draw_map.globalAlpha = 1;
+        draw_map.lineWidth = 1;
         for (let i = 0; i < boxes_info.length; i++) {
             draw_map.beginPath();
             draw_map.rect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
             draw_map.stroke();
             draw_map.fillStyle = this.draw_style.box_color[i % this.draw_style.box_color.length];
-            draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y, boxes_info[i].width, boxes_info[i].height);
-            draw_map.fillStyle = "rgba(0,0,0,0.8)";
-            this.drawText(draw_map, { text: [{ content: boxes_info[i].task, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "KaiTi" });
+            draw_map.fillRect(boxes_info[i].start.x, boxes_info[i].start.y + 1, boxes_info[i].width, boxes_info[i].height - 1);
+            draw_map.fillStyle = "rgba(255,255,255,0.8)";
+            let temp_text = "";
+            let text_num = Math.floor(boxes_info[i].width / this.draw_style.font_size) - 2;
+            if (text_num < boxes_info[i].task.length) {
+                for (let tx_i = 0; tx_i < text_num; tx_i++) {
+                    temp_text += boxes_info[i].task[tx_i];
+                }
+                temp_text += "...";
+            } else {
+                temp_text = boxes_info[i].task;
+            }
+            this.drawText(draw_map, { text: [{ content: temp_text, draw: { x: (boxes_info[i].start.x + boxes_info[i].width / 2), y: (boxes_info[i].start.y + boxes_info[i].height / 2 + this.draw_style.font_size / 2) } }], align_style: "center", font_size: this.draw_style.font_size, font_type: "KaiTi" });
         }
     }
 }

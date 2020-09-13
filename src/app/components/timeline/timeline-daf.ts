@@ -277,20 +277,17 @@ class TimelineDataAndFunction {
                     this.task_all[task_num].start_time = start_time;
                     this.task_all[task_num].end_time = end_time;
                 }
+                temp.task = this.task_all[task_num].task;
                 if ((this.task_all[task_num].start_time <= this.start_time) && (this.task_all[task_num].end_time > this.start_time && this.task_all[task_num].end_time <= this.end_time)) {
-                    temp.task = this.task_all[task_num].task;
                     temp.start = { x: 0, y: 0 };
                     temp.width = (this.task_all[task_num].end_time - this.start_time) * temp_line_length / this.t_day;
                 } else if ((this.start_time <= this.task_all[task_num].start_time && this.task_all[task_num].start_time <= this.end_time) && (this.start_time < this.task_all[task_num].end_time && this.task_all[task_num].end_time <= this.end_time)) {
-                    temp.task = this.task_all[task_num].task;
                     temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * temp_line_length / this.t_day, y: 0 };
                     temp.width = (this.task_all[task_num].end_time - this.task_all[task_num].start_time) * temp_line_length / this.t_day;
                 } else if ((this.start_time <= this.task_all[task_num].start_time && this.task_all[task_num].start_time <= this.end_time) && (this.end_time < this.task_all[task_num].end_time)) {
-                    temp.task = this.task_all[task_num].task;
                     temp.start = { x: (this.task_all[task_num].start_time - this.start_time) * temp_line_length / this.t_day, y: 0 };
                     temp.width = (this.end_time - this.task_all[task_num].start_time) * temp_line_length / this.t_day;
                 } else if (this.task_all[task_num].start_time < this.start_time && this.end_time < this.task_all[task_num].end_time) {
-                    temp.task = this.task_all[task_num].task;
                     temp.start = { x: 0, y: 0 };
                     temp.width = temp_line_length;
                 }
