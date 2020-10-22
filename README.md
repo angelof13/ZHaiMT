@@ -32,7 +32,7 @@
 | 可作为桌面壁纸(借助wallpaper engine等程序) |  |  |
 | | | |
 
-V0.1版本已完成，完成，项目地址：[13号的天空](https://www.zhaimt.com)
+V0.1版本已完成，完成，项目地址：[13号的世界树](https://www.zhaimt.com)
 
 ***
 # 操作及注意事项
